@@ -1,5 +1,7 @@
 package lol
 
+import "github.com/anthonyrouseau/go-riot/summoner"
+
 //ChampionID represents a champion Id
 type ChampionID int64
 
@@ -13,7 +15,7 @@ type ChampionMastery struct {
 	lastPlayTime         int64
 	tokensEarned         int32
 	pointsSinceLastLevel int64
-	summonerID           SummonerID
+	summonerID           summoner.ID
 }
 
 //Rotation represents a ChampionInfo

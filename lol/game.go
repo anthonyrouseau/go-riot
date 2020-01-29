@@ -1,6 +1,10 @@
 package lol
 
-import "time"
+import (
+	"time"
+
+	"github.com/anthonyrouseau/go-riot/summoner"
+)
 
 //CurrentGame represents a CurrentGameInfo
 type CurrentGame struct {
@@ -21,14 +25,14 @@ type CurrentGame struct {
 type CurrentGameParticipant struct {
 	profileIconID            int64
 	championID               ChampionID
-	summonerName             SummonerName
+	summonerName             summoner.Name
 	gameCustomizationObjects []*GameCustomizationObject
 	bot                      bool
 	perks                    *Perks
 	spell1ID                 int64
 	spell2ID                 int64
 	teamID                   int64
-	summonerID               SummonerID
+	summonerID               summoner.ID
 }
 
 //GameCustomizationObject represents a CurrentGameParticipant customization object

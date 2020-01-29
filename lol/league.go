@@ -2,6 +2,7 @@ package lol
 
 import (
 	"github.com/anthonyrouseau/go-riot/queue"
+	"github.com/anthonyrouseau/go-riot/summoner"
 )
 
 //LeagueID is the Id for the league for a given queue
@@ -24,7 +25,7 @@ type LeagueInfo struct {
 
 //LeagueItem represents a LeagueItemDTO
 type LeagueItem struct {
-	summonerName SummonerName
+	summonerName summoner.Name
 	hotStreak    bool
 	miniSeries   *MiniSeries
 	wins         int32
@@ -33,14 +34,14 @@ type LeagueItem struct {
 	freshBlood   bool
 	inactive     bool
 	rank         string
-	summonderID  SummonerID
+	summonderID  summoner.ID
 	leaguePoints int32
 }
 
 //LeagueEntry represents a LeagueEntryDTO
 type LeagueEntry struct {
 	queueType    string
-	summonerName SummonerName
+	summonerName summoner.Name
 	hotStreak    bool
 	miniSeries   *MiniSeries
 	wins         int32
@@ -51,7 +52,7 @@ type LeagueEntry struct {
 	inactive     bool
 	freshBlood   bool
 	tier         Tier
-	summonerID   SummonerID
+	summonerID   summoner.ID
 	leaguePoints int32
 }
 
