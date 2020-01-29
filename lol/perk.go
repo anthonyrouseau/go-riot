@@ -2,7 +2,7 @@ package lol
 
 //Perks is the perks/runes reforged info
 type Perks struct {
-	perkStyle    int64
-	perkIDs      []int64
-	perkSubstyle int64
+	PerkStyle    int64
+	PerkIDs      []int64
+	PerkSubstyle int64
 }

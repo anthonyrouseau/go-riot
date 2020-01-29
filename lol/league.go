@@ -16,50 +16,50 @@ type Division string
 
 //LeagueInfo represents a LeagueListDTO
 type LeagueInfo struct {
-	id      LeagueID
-	tier    Tier
-	queue   queue.Name
-	name    string
-	entries []*LeagueItem
+	ID      LeagueID
+	Tier    Tier
+	Queue   queue.Name
+	Name    string
+	Entries []*LeagueItem
 }
 
 //LeagueItem represents a LeagueItemDTO
 type LeagueItem struct {
-	summonerName summoner.Name
-	hotStreak    bool
-	miniSeries   *MiniSeries
-	wins         int32
-	veteran      bool
-	losses       int32
-	freshBlood   bool
-	inactive     bool
-	rank         string
-	summonderID  summoner.ID
-	leaguePoints int32
+	SummonerName summoner.Name
+	HotStreak    bool
+	MiniSeries   *MiniSeries
+	Wins         int32
+	Veteran      bool
+	Losses       int32
+	FreshBlood   bool
+	Inactive     bool
+	Rank         string
+	SummonerID   summoner.ID
+	LeaguePoints int32
 }
 
 //LeagueEntry represents a LeagueEntryDTO
 type LeagueEntry struct {
-	queueType    string
-	summonerName summoner.Name
-	hotStreak    bool
-	miniSeries   *MiniSeries
-	wins         int32
-	veteran      bool
-	losses       int32
-	rank         string
-	leagueID     LeagueID
-	inactive     bool
-	freshBlood   bool
-	tier         Tier
-	summonerID   summoner.ID
-	leaguePoints int32
+	QueueType    string
+	SummonerName summoner.Name
+	HotStreak    bool
+	MiniSeries   *MiniSeries
+	Wins         int32
+	Veteran      bool
+	Losses       int32
+	Rank         string
+	LeagueID     LeagueID
+	Inactive     bool
+	FreshBlood   bool
+	Tier         Tier
+	SummonerID   summoner.ID
+	LeaguePoints int32
 }
 
 //MiniSeries represents a MiniSeriesDTO
 type MiniSeries struct {
-	progress string
-	losses   int32
-	target   int32
-	wins     int32
+	Progress string
+	Losses   int32
+	Target   int32
+	Wins     int32
 }

@@ -4,117 +4,117 @@ import "time"
 
 //ParticipantIdentity represetns a ParticipantIdentityDTO
 type ParticipantIdentity struct {
-	player *Player
-	id     int32
+	Player *Player
+	ID     int32
 }
 
 //Participant represents a ParticipantDTO
 type Participant struct {
-	stats                     *ParticipantStats
-	participantID             int32
-	runes                     []*Rune
-	timeline                  *ParticipantTimeline
-	teamID                    int32
-	spell2ID                  int32
-	masteries                 []*Mastery
-	highestAcheivedSeasonTier string
-	spell1ID                  int32
-	championID                ChampionID
+	Stats                     *ParticipantStats
+	ParticipantID             int32
+	Runes                     []*Rune
+	Timeline                  *ParticipantTimeline
+	TeamID                    int32
+	Spell2ID                  int32
+	Masteries                 []*Mastery
+	HighestAcheivedSeasonTier string
+	Spell1ID                  int32
+	ChampionID                ChampionID
 }
 
 //ParticipantStats represents a ParticipantStatsDTO
 type ParticipantStats struct {
-	firstBloodAssist                bool
-	visionScore                     int64
-	magicDamageDealtToChampions     int64
-	damageDealtToObjectives         int64
-	totalTimeCrowdControlDealt      int32
-	longestTimeSpentLiving          int32
-	perk0Var1                       int32
-	perk0Var2                       int32
-	perk0Var3                       int32
-	perk1Var1, perk1Var2, perk1Var3 int32
-	perk2Var1, perk2Var2, perk2Var3 int32
-	perk3Var1, perk3Var2, perk3Var3 int32
-	perk4Var1, perk4Var2, perk4Var3 int32
-	perk5Var1, perk5Var2, perk5Var3 int32
-	tripleKills                     int32
-	nodeNeutralizeAssist            int32
-	playerScore0, playerScore1, playerScore2, playerScore3, playerScore4,
-	playerScore5, playerScore6, playerScore7, playerScore8, playerScore9 int32
-	kills                                           int32
-	totalScoreRank                                  int32
-	neutralMinionsKilled                            int32
-	damageDealtToTurrets                            int64
-	physicalDamageDealtToChampions                  int64
-	nodeCapture                                     int32
-	largetMultiKill                                 int32
-	totalUnitsHealed                                int32
-	wardsKilled                                     int32
-	largestCriticalStrike                           int32
-	largestKillingSpree                             int32
-	quadraKills                                     int32
-	teamObjective                                   int32
-	magicDamageDealt                                int64
-	item0, item1, item2, item3, item4, item5, item6 int32
-	neutralMinionsKilledTeamJungle                  int32
-	perk0, perk1, perk2, perk3, perk4, perk5        int32
-	damageSelfMitigated                             int64
-	magicalDamageTaken                              int64
-	firstInhibitorKill                              bool
-	trueDamgeTaken                                  int64
-	nodeNeutralize                                  int32
-	assists                                         int32
-	combatPlayerScore                               int32
-	perkPrimaryStyle                                int32
-	goldSpent                                       int32
-	trueDamageDealt                                 int64
-	participantID                                   int32
-	totalDamageTake                                 int64
-	physicalDamageDealt                             int64
-	sightWardsBoughtInGame                          int32
-	totalDamageDealtToChampions                     int64
-	physicalDamageTaken                             int64
-	totalPlayerScore                                int32
-	win                                             bool
-	objectivePlayerScore                            int32
-	totalDamageDealt                                int64
-	neutralMinionsKilledEnemyJungle                 int32
-	deaths                                          int32
-	wardsPlaced                                     int32
-	perkSubStyle                                    int32
-	turretKills                                     int32
-	firstBloodKill                                  bool
-	trueDamageDealtToChampions                      int64
-	goldEarned                                      int32
-	killingSprees                                   int32
-	unrealKills                                     int32
-	altarsCaptured                                  int32
-	firstTowerAssist                                bool
-	firstTowerKill                                  bool
-	champLevel                                      int32
-	doubleKills                                     int32
-	nodeCaptureAssist                               int32
-	inhibitorKills                                  int32
-	firstInhibitorAssist                            bool
-	visionWardsBoughtInGame                         int32
-	altarsNeutralized                               int32
-	pentaKills                                      int32
-	totalHeal                                       int32
-	totalMinionsKilled                              int32
-	timeCCingOthers                                 time.Duration
+	FirstBloodAssist                bool
+	VisionScore                     int64
+	MagicDamageDealtToChampions     int64
+	DamageDealtToObjectives         int64
+	TotalTimeCrowdControlDealt      int32
+	LongestTimeSpentLiving          int32
+	Perk0Var1                       int32
+	Perk0Var2                       int32
+	Perk0Var3                       int32
+	Perk1Var1, Perk1Var2, Perk1Var3 int32
+	Perk2Var1, Perk2Var2, Perk2Var3 int32
+	Perk3Var1, Perk3Var2, Perk3Var3 int32
+	Perk4Var1, Perk4Var2, Perk4Var3 int32
+	Perk5Var1, Perk5Var2, Perk5Var3 int32
+	TripleKills                     int32
+	NodeNeutralizeAssist            int32
+	PlayerScore0, PlayerScore1, PlayerScore2, PlayerScore3, PlayerScore4,
+	PlayerScore5, PlayerScore6, PlayerScore7, PlayerScore8, PlayerScore9 int32
+	Kills                                           int32
+	TotalScoreRank                                  int32
+	NeutralMinionsKilled                            int32
+	DamageDealtToTurrets                            int64
+	PhysicalDamageDealtToChampions                  int64
+	NodeCapture                                     int32
+	LargetMultiKill                                 int32
+	TotalUnitsHealed                                int32
+	WardsKilled                                     int32
+	LargestCriticalStrike                           int32
+	LargestKillingSpree                             int32
+	QuadraKills                                     int32
+	TeamObjective                                   int32
+	MagicDamageDealt                                int64
+	Item0, Item1, Item2, Item3, Item4, Item5, Item6 int32
+	NeutralMinionsKilledTeamJungle                  int32
+	Perk0, Perk1, Perk2, Perk3, Perk4, Perk5        int32
+	DamageSelfMitigated                             int64
+	MagicalDamageTaken                              int64
+	FirstInhibitorKill                              bool
+	TrueDamgeTaken                                  int64
+	NodeNeutralize                                  int32
+	Assists                                         int32
+	CombatPlayerScore                               int32
+	PerkPrimaryStyle                                int32
+	GoldSpent                                       int32
+	TrueDamageDealt                                 int64
+	ParticipantID                                   int32
+	TotalDamageTake                                 int64
+	PhysicalDamageDealt                             int64
+	SightWardsBoughtInGame                          int32
+	TotalDamageDealtToChampions                     int64
+	PhysicalDamageTaken                             int64
+	TotalPlayerScore                                int32
+	Win                                             bool
+	ObjectivePlayerScore                            int32
+	TotalDamageDealt                                int64
+	NeutralMinionsKilledEnemyJungle                 int32
+	Deaths                                          int32
+	WardsPlaced                                     int32
+	PerkSubStyle                                    int32
+	TurretKills                                     int32
+	FirstBloodKill                                  bool
+	TrueDamageDealtToChampions                      int64
+	GoldEarned                                      int32
+	KillingSprees                                   int32
+	UnrealKills                                     int32
+	AltarsCaptured                                  int32
+	FirstTowerAssist                                bool
+	FirstTowerKill                                  bool
+	ChampLevel                                      int32
+	DoubleKills                                     int32
+	NodeCaptureAssist                               int32
+	InhibitorKills                                  int32
+	FirstInhibitorAssist                            bool
+	VisionWardsBoughtInGame                         int32
+	AltarsNeutralized                               int32
+	PentaKills                                      int32
+	TotalHeal                                       int32
+	TotalMinionsKilled                              int32
+	TimeCCingOthers                                 time.Duration
 }
 
 //ParticipantTimeline represents a ParticipantTimelineDTO
 type ParticipantTimeline struct {
-	lane                        string
-	participantID               int32
-	csDiffPerMinDeltas          map[string]float32
-	goldPerMinDeltas            map[string]float32
-	xpDiffPerMinDeltas          map[string]float32
-	creepsPerMinDeltas          map[string]float32
-	xpPerMinDeltas              map[string]float32
-	role                        string
-	damageTakenDiffPerMinDeltas map[string]float32
-	damageTakePerMinDeltas      map[string]float32
+	Lane                        string
+	ParticipantID               int32
+	CSDiffPerMinDeltas          map[string]float32
+	GoldPerMinDeltas            map[string]float32
+	XPDiffPerMinDeltas          map[string]float32
+	CreepsPerMinDeltas          map[string]float32
+	XPPerMinDeltas              map[string]float32
+	Role                        string
+	DamageTakenDiffPerMinDeltas map[string]float32
+	DamageTakePerMinDeltas      map[string]float32
 }

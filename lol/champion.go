@@ -7,27 +7,27 @@ type ChampionID int64
 
 //ChampionMastery represents a ChampionMasteryDTO containing mastery information for a single champion and summoner combination.
 type ChampionMastery struct {
-	chestGranted         bool
-	level                int32
-	points               int32
-	championID           ChampionID
-	pointsUntilNextLevel int64
-	lastPlayTime         int64
-	tokensEarned         int32
-	pointsSinceLastLevel int64
-	summonerID           summoner.ID
+	ChestGranted         bool
+	Level                int32
+	Points               int32
+	ChampionID           ChampionID
+	PointsUntilNextLevel int64
+	LastPlayTime         int64
+	TokensEarned         int32
+	PointsSinceLastLevel int64
+	SummonerID           summoner.ID
 }
 
 //Rotation represents a ChampionInfo
 type Rotation struct {
-	freeChampions           []ChampionID
-	freeChampionsNewPlayers []ChampionID
-	maxNewPlayerLevel       int32
+	FreeChampions           []ChampionID
+	FreeChampionsNewPlayers []ChampionID
+	MaxNewPlayerLevel       int32
 }
 
 //BannedChampion represents a BannedChampionDTO
 type BannedChampion struct {
-	pickTurn   int32
-	championID ChampionID
-	teamID     int64
+	PickTurn   int32
+	ChampionID ChampionID
+	TeamID     int64
 }

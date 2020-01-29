@@ -7,97 +7,97 @@ type MatchID int64
 
 //Match represents a MatchDTO
 type Match struct {
-	seasonID              int32
-	queueID               int32
-	gameID                MatchID
-	participantIdentities []*ParticipantIdentity
-	gameVersion           string
-	platformID            string
-	gameMode              string
-	mapID                 int32
-	gameType              string
-	teams                 []*TeamStats
-	participants          []*Participant
-	gameDuration          time.Duration
-	gameCreation          time.Time
+	SeasonID              int32
+	QueueID               int32
+	GameID                MatchID
+	ParticipantIdentities []*ParticipantIdentity
+	GameVersion           string
+	PlatformID            string
+	GameMode              string
+	MapID                 int32
+	GameType              string
+	Teams                 []*TeamStats
+	Participants          []*Participant
+	GameDuration          time.Duration
+	GameCreation          time.Time
 }
 
 //MatchList represents a MatchListDTO
 type MatchList struct {
-	matches    []*MatchReference
-	totalGames int32
-	startIndex int32
-	endIndex   int32
+	Matches    []*MatchReference
+	TotalGames int32
+	StartIndex int32
+	EndIndex   int32
 }
 
 //MatchReference represents a MatchReferenceDTO
 type MatchReference struct {
-	lane       string
-	gameID     MatchID
-	champion   ChampionID
-	platformID int32
-	season     int32
-	queue      int32
-	role       string
-	timestamp  time.Time
+	Lane       string
+	GameID     MatchID
+	Champion   ChampionID
+	PlatformID int32
+	Season     int32
+	Queue      int32
+	Role       string
+	Timestamp  time.Time
 }
 
 //MatchTimeline represents a MatchTimelineDTO
 type MatchTimeline struct {
-	frames        []*MatchFrame
-	frameInterval int64
+	Frames        []*MatchFrame
+	FrameInterval int64
 }
 
 //MatchFrame represents a MatchFrameDTO
 type MatchFrame struct {
-	timestamp         time.Time
-	participantFrames map[string]*MatchParticipantFrame
-	events            []*MatchEvent
+	Timestamp         time.Time
+	ParticipantFrames map[string]*MatchParticipantFrame
+	Events            []*MatchEvent
 }
 
 //MatchParticipantFrame represents a MatchParticipantFrameDTO
 type MatchParticipantFrame struct {
-	totalGold           int32
-	teamScore           int32
-	participantID       int32
-	level               int32
-	currentGold         int32
-	minionsKilled       int32
-	dominionScore       int32
-	position            *MatchPosition
-	xp                  int32
-	jungleMinionsKilled int32
+	TotalGold           int32
+	TeamScore           int32
+	ParticipantID       int32
+	Level               int32
+	CurrentGold         int32
+	MinionsKilled       int32
+	DominionScore       int32
+	Position            *MatchPosition
+	XP                  int32
+	JungleMinionsKilled int32
 }
 
 //MatchEvent represents a MatchEventDTO
 type MatchEvent struct {
-	eventType               string
-	towerType               string
-	teamID                  int32
-	ascendedType            string
-	killerID                int32
-	levelUpType             string
-	pointCaptured           string
-	assistingParticipantIDs []int32
-	wardType                string
-	monsterType             string
-	matchEventType          string
-	skillSlot               int32
-	victimID                int32
-	timestamp               time.Time
-	afterID                 int32
-	monsterSubType          string
-	laneType                string
-	itemID                  int32
-	participantID           int32
-	buildingType            string
-	creatorID               int32
-	position                *MatchPosition
-	beforeID                int32
+	EventType               string
+	TowerType               string
+	TeamID                  int32
+	AscendedType            string
+	KillerID                int32
+	LevelUpType             string
+	PointCaptured           string
+	AssistingParticipantIDs []int32
+	WardType                string
+	MonsterType             string
+	MatchEventType          string
+	SkillSlot               int32
+	VictimID                int32
+	Timestamp               time.Time
+	AfterID                 int32
+	MonsterSubType          string
+	LaneType                string
+	ItemID                  int32
+	ParticipantID           int32
+	BuildingType            string
+	CreatorID               int32
+	Position                *MatchPosition
+	BeforeID                int32
 }
 
 //MatchPosition represents a MatchPositionDTO
 type MatchPosition struct {
-	y int32
-	x int32
+	Y int32
+	X int32
 }

@@ -2,26 +2,26 @@ package lol
 
 //TeamStats represents a TeamStatsDTO
 type TeamStats struct {
-	firstDragon          bool
-	firstInhibitor       bool
-	bans                 []*TeamBans
-	baronKills           int32
-	firstRiftHerald      bool
-	firstBaron           bool
-	riftHeraldKills      int32
-	firstBlood           bool
-	teamID               int32
-	firstTower           bool
-	vilemawKills         int32
-	inhibitorKills       int32
-	towerKills           int32
-	dominionVictoryScore int32
-	win                  string
-	dragonKills          int32
+	FirstDragon          bool
+	FirstInhibitor       bool
+	Bans                 []*TeamBans
+	BaronKills           int32
+	FirstRiftHerald      bool
+	FirstBaron           bool
+	RiftHeraldKills      int32
+	FirstBlood           bool
+	TeamID               int32
+	FirstTower           bool
+	VilemawKills         int32
+	InhibitorKills       int32
+	TowerKills           int32
+	DominionVictoryScore int32
+	Win                  string
+	DragonKills          int32
 }
 
 //TeamBans represents a TeamBansDTO
 type TeamBans struct {
-	pickTurn   int32
-	championID ChampionID
+	PickTurn   int32
+	ChampionID ChampionID
 }
