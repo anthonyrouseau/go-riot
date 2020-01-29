@@ -32,11 +32,17 @@ type Client interface {
 	SummonerByAccount(account.ID) *summoner.Info
 	SummonerByName(summoner.Name) *summoner.Info
 	SummonerByPUUID(summoner.PUUID) *summoner.Info
-	SummonerBySummonerID(summoner.Info) *summoner.Info
+	SummonerBySummonerID(summoner.ID) *summoner.Info
 	TFTChallenger() *tft.LeagueList
-	TFTSummonerLeagueEntries(tft.SummonerID) []*tft.LeagueEntry
+	TFTSummonerLeagueEntries(summoner.ID) []*tft.LeagueEntry
 	TFTAllLeagueEntries(tft.Tier, tft.Division) []*tft.LeagueEntry
 	TFTGrandmaster() *tft.LeagueList
 	TFTLeague(tft.LeagueID) *tft.LeagueList
 	TFTMaster() *tft.LeagueList
+	TFTMatchIDs(summoner.PUUID) []tft.MatchID
+	TFTMatch(tft.MatchID) *tft.Match
+	TFTSummonerByAccount(account.ID) *summoner.Info
+	TFTSummonerByName(summoner.Name) *summoner.Info
+	TFTSummonerByPUUID(summoner.PUUID) *summoner.Info
+	TFTSummonerBySummonerID(summoner.ID) *summoner.Info
 }
