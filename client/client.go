@@ -7,6 +7,7 @@ import (
 	"github.com/anthonyrouseau/go-riot/shard"
 	"github.com/anthonyrouseau/go-riot/summoner"
 	"github.com/anthonyrouseau/go-riot/tft"
+	"github.com/anthonyrouseau/go-riot/tournament"
 )
 
 //Client is the interface whose methods will correspond to the Riot api routes
@@ -25,8 +26,6 @@ type Client interface {
 	Status() shard.Status
 	AccountMatches(account.ID) *lol.MatchList
 	MatchTimeline(lol.MatchID) *lol.MatchTimeline
-	TournamentMatchIDs(lol.TournamentCode) []lol.MatchID
-	TournamentMatch(lol.MatchID, lol.TournamentCode) *lol.Match
 	ActiveGame(summoner.ID) *lol.CurrentGame
 	FeaturedGames() *lol.FeaturedGames
 	SummonerByAccount(account.ID) *summoner.Info
@@ -45,4 +44,13 @@ type Client interface {
 	TFTSummonerByName(summoner.Name) *summoner.Info
 	TFTSummonerByPUUID(summoner.PUUID) *summoner.Info
 	TFTSummonerBySummonerID(summoner.ID) *summoner.Info
+	ThirdPartyCode(summoner.ID) string
+	TournamentMatchIDs(tournament.Code) []lol.MatchID
+	TournamentMatch(lol.MatchID, tournament.Code) *lol.Match
+	TournamentCodes() []tournament.Code
+	TournamanetCodeInfo(tournament.Code) *tournament.CodeInfo
+	UpdateTournamentCode(tournament.Code)
+	LobbyEvents(tournament.Code) []tournament.LobbyEvents
+	TournamentProvider() int32
+	Tournament() tournament.ID
 }
