@@ -24,8 +24,8 @@ type Client interface {
 	LOLMaster(queue.Name) lol.LeagueInfo
 	LOLMatch(lol.MatchID) *lol.Match
 	Status() shard.Status
-	AccountMatches(account.ID) *lol.MatchList
-	MatchTimeline(lol.MatchID) *lol.MatchTimeline
+	LOLAccountMatches(account.ID) *lol.MatchList
+	LOLMatchTimeline(lol.MatchID) *lol.MatchTimeline
 	ActiveGame(summoner.ID) *lol.CurrentGame
 	FeaturedGames() *lol.FeaturedGames
 	SummonerByAccount(account.ID) *summoner.Info
