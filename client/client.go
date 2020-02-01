@@ -11,7 +11,7 @@ import (
 	"golang.org/x/time/rate"
 )
 
-//Client is the interface whose methods will correspond to the Riot api routes
+//Client is an interface with methods corresponding to the Riot api routes
 type Client interface {
 	AllSummonerChampionMastery(summoner.ID) ([]*lol.ChampionMastery, error)
 	SummonerChampionMastery(summoner.ID, lol.ChampionID) (*lol.ChampionMastery, error)
@@ -59,10 +59,10 @@ type Client interface {
 //client is the internal implementation of the Client interface
 //the client is has a limiter that will rate limit according to the Riot API
 type client struct {
-	limiter *rate.Limiter
+	limiters map[string]*rate.Limiter
 }
 
 //NewClient returns a basic Client for use with the Riot API
-func NewClient() Client {
-	return &client{}
+func NewClient() (Client, error) {
+	return &client{}, nil
 }
