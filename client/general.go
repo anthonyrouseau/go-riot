@@ -11,13 +11,13 @@ func (c *client) ThirdPartyCode(summoner.ID) (string, error) {
 }
 
 func (c *client) ChampionRotations() (*lol.Rotation, error) {
-	return &lol.Rotation{}, errUnimplemented
+	return nil, errUnimplemented
 }
 
 func (c *client) Status() (*shard.Status, error) {
-	return &shard.Status{}, errUnimplemented
+	return nil, errUnimplemented
 }
 
 func (c *client) FeaturedGames() (*lol.FeaturedGames, error) {
-	return &lol.FeaturedGames{}, errUnimplemented
+	return nil, errUnimplemented
 }
