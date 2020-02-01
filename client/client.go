@@ -8,6 +8,7 @@ import (
 	"github.com/anthonyrouseau/go-riot/summoner"
 	"github.com/anthonyrouseau/go-riot/tft"
 	"github.com/anthonyrouseau/go-riot/tournament"
+	"golang.org/x/time/rate"
 )
 
 //Client is the interface whose methods will correspond to the Riot api routes
@@ -53,4 +54,14 @@ type Client interface {
 	LobbyEvents(tournament.Code) []tournament.LobbyEvents
 	TournamentProvider() int32
 	Tournament() tournament.ID
+}
+
+//client is the internal implementation of the Client interface
+//the client is has a limiter that will rate limit according to the Riot API
+type client struct {
+	limiter *rate.Limiter
+}
+
+func NewClient() (*Client) {
+	return &client{}
 }
