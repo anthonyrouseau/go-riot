@@ -42,3 +42,43 @@ func (c *client) LOLAccountMatches(account.ID) (*lol.MatchList, error) {
 func (c *client) LOLMatchTimeline(lol.MatchID) (*lol.MatchTimeline, error) {
 	return nil, errUnimplemented
 }
+
+func (c *client) LOLSummonerByAccount(account.ID) (*summoner.Info, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLSummonerByName(summoner.Name) (*summoner.Info, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLSummonerByPUUID(summoner.PUUID) (*summoner.Info, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLSummonerBySummonerID(summoner.ID) (*summoner.Info, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLAllSummonerChampionMastery(summoner.ID) ([]*lol.ChampionMastery, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLSummonerChampionMastery(summoner.ID, lol.ChampionID) (*lol.ChampionMastery, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLSummonerChampionMasteryScore(summoner.ID) (int32, error) {
+	return -1, errUnimplemented
+}
+
+func (c *client) LOLChampionRotations() (*lol.Rotation, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLFeaturedGames() (*lol.FeaturedGames, error) {
+	return nil, errUnimplemented
+}
+
+func (c *client) LOLActiveGame(summoner.ID) (*lol.CurrentGame, error) {
+	return nil, errUnimplemented
+}
