@@ -7,7 +7,7 @@ import (
 	"github.com/anthonyrouseau/go-riot/summoner"
 )
 
-func (c *client) LOLChallenger(queue.Name) (lol.LeagueInfo, error) {
+func (c *client) LOLChallenger(queue.Name) (*lol.LeagueInfo, error) {
 
 }
 
@@ -19,15 +19,15 @@ func (c *client) LOLAllLeagueEntries(queue.Name, lol.Tier, lol.Division) ([]*lol
 
 }
 
-func (c *client) LOLGrandmaster(queue.Name) (lol.LeagueInfo, error) {
+func (c *client) LOLGrandmaster(queue.Name) (*lol.LeagueInfo, error) {
 
 }
 
-func (c *client) LOLLeague(lol.LeagueID) (lol.LeagueInfo, error) {
+func (c *client) LOLLeague(lol.LeagueID) (*lol.LeagueInfo, error) {
 
 }
 
-func (c *client) LOLMaster(queue.Name) (lol.LeagueInfo, error) {
+func (c *client) LOLMaster(queue.Name) (*lol.LeagueInfo, error) {
 
 }
 

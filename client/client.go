@@ -16,15 +16,15 @@ type Client interface {
 	AllSummonerChampionMastery(summoner.ID) []*lol.ChampionMastery
 	SummonerChampionMastery(summoner.ID, lol.ChampionID) *lol.ChampionMastery
 	SummonerChampionMasteryScore(summoner.ID) int32
-	ChampionRotations() lol.Rotation
-	LOLChallenger(queue.Name) lol.LeagueInfo
+	ChampionRotations() *lol.Rotation
+	LOLChallenger(queue.Name) *lol.LeagueInfo
 	LOLSummonerLeagueEntries(summoner.ID) []*lol.LeagueEntry
 	LOLAllLeagueEntries(queue.Name, lol.Tier, lol.Division) []*lol.LeagueEntry
-	LOLGrandmaster(queue.Name) lol.LeagueInfo
-	LOLLeague(lol.LeagueID) lol.LeagueInfo
-	LOLMaster(queue.Name) lol.LeagueInfo
+	LOLGrandmaster(queue.Name) *lol.LeagueInfo
+	LOLLeague(lol.LeagueID) *lol.LeagueInfo
+	LOLMaster(queue.Name) *lol.LeagueInfo
 	LOLMatch(lol.MatchID) *lol.Match
-	Status() shard.Status
+	Status() *shard.Status
 	LOLAccountMatches(account.ID) *lol.MatchList
 	LOLMatchTimeline(lol.MatchID) *lol.MatchTimeline
 	ActiveGame(summoner.ID) *lol.CurrentGame
@@ -51,7 +51,7 @@ type Client interface {
 	TournamentCodes() []tournament.Code
 	TournamanetCodeInfo(tournament.Code) *tournament.CodeInfo
 	UpdateTournamentCode(tournament.Code)
-	LobbyEvents(tournament.Code) []tournament.LobbyEvents
+	LobbyEvents(tournament.Code) []*tournament.LobbyEvents
 	TournamentProvider() int32
 	Tournament() tournament.ID
 }
@@ -62,6 +62,6 @@ type client struct {
 	limiter *rate.Limiter
 }
 
-func NewClient() (*Client) {
+func NewClient() *Client {
 	return &client{}
 }

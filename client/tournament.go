@@ -25,7 +25,7 @@ func (c *client) UpdateTournamentCode(tournament.Code) {
 
 }
 
-func (c *client) LobbyEvents(tournament.Code) ([]tournament.LobbyEvents, error) {
+func (c *client) LobbyEvents(tournament.Code) ([]*tournament.LobbyEvents, error) {
 
 }
 
