@@ -73,7 +73,7 @@ type Client interface {
 //client wraps an http client and implements the Client interface.
 //The client may have a limiters map that will rate limit according to the Riot API guidelines for that client variant
 type client struct {
-	limiters map[routeKey]*rate.Limiter
+	limiters map[routeKey][]*rate.Limiter
 	variant  variant
 	apiKey   string
 	client   *http.Client
@@ -92,25 +92,25 @@ func (c *client) APIKey() string {
 //NewClient returns a Client with variant as unspecified
 func NewClient(key string) (Client, error) {
 	c := &http.Client{}
-	return &client{variant: unspecifiedClient, apiKey: key, client: c}, nil
+	return &client{variant: unspecifiedClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
 }
 
 //NewDevClient returns a Client with variant dev
 func NewDevClient(key string) (Client, error) {
 	c := &http.Client{}
-	return &client{variant: devClient, apiKey: key, client: c}, nil
+	return &client{variant: devClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
 }
 
 //NewPersonalClient returns a Client with variant personal
 func NewPersonalClient(key string) (Client, error) {
 	c := &http.Client{}
-	return &client{variant: personalClient, apiKey: key, client: c}, nil
+	return &client{variant: personalClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
 }
 
 //NewProductionClient returns a Client with variant production
 func NewProductionClient(key string) (Client, error) {
 	c := &http.Client{}
-	return &client{variant: productionClient, apiKey: key, client: c}, nil
+	return &client{variant: productionClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
 }
 
 //do wraps the http.Do method and adds the APIKey to the request header
