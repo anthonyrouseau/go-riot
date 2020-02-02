@@ -112,3 +112,13 @@ func NewProductionClient(key string) (Client, error) {
 	c := &http.Client{}
 	return &client{variant: productionClient, apiKey: key, client: c}, nil
 }
+
+//do wraps the http.Do method and adds the APIKey to the request header
+func (c *client) do(req *http.Request) (*http.Response, error) {
+	req.Header.Add("X-Riot-Token", c.APIKey())
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
