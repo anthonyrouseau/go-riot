@@ -59,7 +59,7 @@ type Client interface {
 //client is the internal implementation of the Client interface
 //the client is has a limiter that will rate limit according to the Riot API
 type client struct {
-	limiters map[string]*rate.Limiter
+	limiters map[routeKey]*rate.Limiter
 }
 
 //NewClient returns a basic Client for use with the Riot API
