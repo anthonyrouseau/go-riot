@@ -116,6 +116,10 @@ func NewProductionClient(key string) (Client, error) {
 
 //do wraps the http.Do method and adds the APIKey to the request header
 func (c *client) do(ctx context.Context, req *http.Request, key routeKey) (*http.Response, error) {
+	err := c.rateLimit(ctx, key)
+	if err != nil {
+		return nil, err
+	}
 	req.Header.Add("X-Riot-Token", c.APIKey())
 	resp, err := c.client.Do(req)
 	if err != nil {
