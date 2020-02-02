@@ -1,6 +1,8 @@
 package client
 
 import (
+	"net/http"
+
 	"github.com/anthonyrouseau/go-riot/account"
 	"github.com/anthonyrouseau/go-riot/lol"
 	"github.com/anthonyrouseau/go-riot/queue"
@@ -9,6 +11,16 @@ import (
 	"github.com/anthonyrouseau/go-riot/tft"
 	"github.com/anthonyrouseau/go-riot/tournament"
 	"golang.org/x/time/rate"
+)
+
+//variant is the type of client e.g. dev, production, etc. used for rate limiting
+type variant int
+
+const (
+	unspecifiedClient variant = iota
+	devClient
+	personalClient
+	productionClient
 )
 
 //Client is an interface with methods corresponding to the Riot api routes
@@ -54,15 +66,49 @@ type Client interface {
 	LobbyEvents(tournament.Code) ([]*tournament.LobbyEvents, error)
 	TournamentProvider() (int32, error)
 	Tournament() (tournament.ID, error)
+	Variant() variant
+	APIKey() string
 }
 
-//client is the internal implementation of the Client interface
-//the client is has a limiter that will rate limit according to the Riot API
+//client wraps an http client and implements the Client interface.
+//The client may have a limiters map that will rate limit according to the Riot API guidelines for that client variant
 type client struct {
 	limiters map[routeKey]*rate.Limiter
+	variant  variant
+	apiKey   string
+	client   *http.Client
 }
 
-//NewClient returns a basic Client for use with the Riot API
-func NewClient() (Client, error) {
-	return &client{}, nil
+//Variant returns the variant of the client
+func (c *client) Variant() variant {
+	return c.variant
+}
+
+//APIKey returns the api key associated with the client
+func (c *client) APIKey() string {
+	return c.apiKey
+}
+
+//NewClient returns a Client with variant as unspecified
+func NewClient(key string) (Client, error) {
+	c := &http.Client{}
+	return &client{variant: unspecifiedClient, apiKey: key, client: c}, nil
+}
+
+//NewDevClient returns a Client with variant dev
+func NewDevClient(key string) (Client, error) {
+	c := &http.Client{}
+	return &client{variant: devClient, apiKey: key, client: c}, nil
+}
+
+//NewPersonalClient returns a Client with variant personal
+func NewPersonalClient(key string) (Client, error) {
+	c := &http.Client{}
+	return &client{variant: personalClient, apiKey: key, client: c}, nil
+}
+
+//NewProductionClient returns a Client with variant production
+func NewProductionClient(key string) (Client, error) {
+	c := &http.Client{}
+	return &client{variant: productionClient, apiKey: key, client: c}, nil
 }
