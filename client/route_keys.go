@@ -4,10 +4,10 @@ type routeKey int
 
 //Routes constants are used as keys to map client methods to rate limiters
 const (
-	routeAllSummonerChampionMastery routeKey = iota
-	routeSummonerChampionMastery
-	routeSummonerChampionMasteryScore
-	routeChampionRotations
+	routeLolAllSummonerChampionMastery routeKey = iota
+	routeLolSummonerChampionMastery
+	routeLolSummonerChampionMasteryScore
+	routeLolChampionRotations
 	routeLolChallenger
 	routeLolSummonerLeagueEntries
 	routeLoLAllLeagueEntries
@@ -18,12 +18,12 @@ const (
 	routeStatus
 	routeLolAccountMatches
 	routeLolMatchTimeline
-	routeActiveGame
-	routeFeaturedGames
-	routeSummonerByAccount
-	routeSummonerByName
-	routeSummonerByPUUID
-	routeSummonerBySummonerID
+	routeLolActiveGame
+	routeLolFeaturedGames
+	routeLolSummonerByAccount
+	routeLolSummonerByName
+	routeLolSummonerByPUUID
+	routeLolSummonerBySummonerID
 	routeTftChallenger
 	routeTftSummonerLeagueEntries
 	routeTftGrandmaster

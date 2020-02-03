@@ -1,15 +1,13 @@
 package lol
 
 import (
-	"time"
-
 	"github.com/anthonyrouseau/go-riot/summoner"
 )
 
 //CurrentGame represents a CurrentGameInfo
 type CurrentGame struct {
 	GameID            MatchID                   `json:"gameId"`
-	GameStartTime     time.Time                 `json:"gameStartTime"`
+	GameStartTime     int64                     `json:"gameStartTime"`
 	PlatformID        string                    `json:"platformId"`
 	GameMode          string                    `json:"gameMode"`
 	MapID             string                    `json:"mapId"`
@@ -50,7 +48,7 @@ type FeaturedGames struct {
 //FeaturedGame represents FeaturedGameInfo
 type FeaturedGame struct {
 	GameID            int64             `json:"gameId"`
-	GameStartTime     time.Time         `json:"gameStartTime"`
+	GameStartTime     int64             `json:"gameStartTime"`
 	PlatformID        string            `json:"platformId"`
 	GameMode          string            `json:"gameMode"`
 	MapID             int64             `json:"mapId"`

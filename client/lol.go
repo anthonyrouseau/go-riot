@@ -131,41 +131,130 @@ func (c *client) LOLMatchTimeline(ctx context.Context, matchID lol.MatchID) (*lo
 }
 
 func (c *client) LOLSummonerByAccount(ctx context.Context, accountID account.ID) (*summoner.Info, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/summoner/v4/summoners/by-account/%s", c.region, c.host, accountID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	summonerInfo, err := c.getValue(ctx, req, routeLolSummonerByAccount, &summoner.Info{})
+	if err != nil {
+		return nil, err
+	}
+	return summonerInfo.(*summoner.Info), nil
 }
 
 func (c *client) LOLSummonerByName(ctx context.Context, sumName summoner.Name) (*summoner.Info, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/summoner/v4/summoners/by-name/%s", c.region, c.host, sumName)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	summonerInfo, err := c.getValue(ctx, req, routeLolSummonerByName, &summoner.Info{})
+	if err != nil {
+		return nil, err
+	}
+	return summonerInfo.(*summoner.Info), nil
 }
 
 func (c *client) LOLSummonerByPUUID(ctx context.Context, sumPUUID summoner.PUUID) (*summoner.Info, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/summoner/v4/summoners/by-puuid/%s", c.region, c.host, sumPUUID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	summonerInfo, err := c.getValue(ctx, req, routeLolSummonerByPUUID, &summoner.Info{})
+	if err != nil {
+		return nil, err
+	}
+	return summonerInfo.(*summoner.Info), nil
 }
 
 func (c *client) LOLSummonerBySummonerID(ctx context.Context, sumID summoner.ID) (*summoner.Info, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/summoner/v4/summoners/%s", c.region, c.host, sumID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	summonerInfo, err := c.getValue(ctx, req, routeLolSummonerBySummonerID, &summoner.Info{})
+	if err != nil {
+		return nil, err
+	}
+	return summonerInfo.(*summoner.Info), nil
 }
 
 func (c *client) LOLAllSummonerChampionMastery(ctx context.Context, sumID summoner.ID) ([]*lol.ChampionMastery, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/champion-mastery/v4/champion-masteries/by-summoner/%s", c.region, c.host, sumID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	rec := []*lol.ChampionMastery{}
+	masteries, err := c.getValue(ctx, req, routeLolAllSummonerChampionMastery, &rec)
+	if err != nil {
+		return nil, err
+	}
+	return *masteries.(*[]*lol.ChampionMastery), nil
 }
 
 func (c *client) LOLSummonerChampionMastery(ctx context.Context, sumID summoner.ID, champID lol.ChampionID) (*lol.ChampionMastery, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/champion-mastery/v4/champion-masteries/by-summoner/%s/by-champion/%d", c.region, c.host, sumID, champID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	mastery, err := c.getValue(ctx, req, routeLolSummonerChampionMastery, &lol.ChampionMastery{})
+	if err != nil {
+		return nil, err
+	}
+	return mastery.(*lol.ChampionMastery), nil
 }
 
 func (c *client) LOLSummonerChampionMasteryScore(ctx context.Context, sumID summoner.ID) (int32, error) {
-	return -1, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/champion-mastery/v4/scores/by-summoner/%s", c.region, c.host, sumID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return -1, err
+	}
+	var rec int32
+	score, err := c.getValue(ctx, req, routeLolSummonerChampionMasteryScore, &rec)
+	if err != nil {
+		return -1, err
+	}
+	return *score.(*int32), nil
 }
 
 func (c *client) LOLChampionRotations(ctx context.Context) (*lol.Rotation, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/platform/v3/champion-rotations", c.region, c.host)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	rotations, err := c.getValue(ctx, req, routeLolChampionRotations, &lol.Rotation{})
+	return rotations.(*lol.Rotation), nil
 }
 
 func (c *client) LOLFeaturedGames(ctx context.Context) (*lol.FeaturedGames, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/spectator/v4/featured-games", c.region, c.host)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	featured, err := c.getValue(ctx, req, routeLolFeaturedGames, &lol.FeaturedGames{})
+	if err != nil {
+		return nil, err
+	}
+	return featured.(*lol.FeaturedGames), nil
 }
 
 func (c *client) LOLActiveGame(ctx context.Context, sumID summoner.ID) (*lol.CurrentGame, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/spectator/v4/active-games/by-summoner/%s", c.region, c.host, sumID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	active, err := c.getValue(ctx, req, routeLolActiveGame, &lol.CurrentGame{})
+	if err != nil {
+		return nil, err
+	}
+	return active.(*lol.CurrentGame), nil
 }

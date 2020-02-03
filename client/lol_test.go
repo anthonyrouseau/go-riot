@@ -8,11 +8,14 @@ import (
 )
 
 const (
-	testAPIKey     = "RGAPI-a348803e-d2f9-42c4-a442-c8a5b71dd12d"
-	testSummonerID = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
-	testLeagueID   = "c60807e8-6afb-38fd-ab9b-ae8588dc8b27"
-	testMatchID    = 3285199726
-	testAccountID  = "182BwdvZQMIpZwCk4vGZiHs71qSK18Bo9Ll6zBU2LQ"
+	testAPIKey        = "RGAPI-a348803e-d2f9-42c4-a442-c8a5b71dd12d"
+	testSummonerID    = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
+	testLeagueID      = "c60807e8-6afb-38fd-ab9b-ae8588dc8b27"
+	testMatchID       = 3285199726
+	testAccountID     = "182BwdvZQMIpZwCk4vGZiHs71qSK18Bo9Ll6zBU2LQ"
+	testSummonerName  = "C9 Sneaky"
+	testSummonerPUUID = "Uc6OVbDglCiUrKxrRvcqRmo6RY_EKiFFy5CqNet57wEcFyzA1ElI5C8WUuPvp1eLFgYrmLajMGpsyA"
+	testChampionID    = 202
 )
 
 func TestLOLMethods(t *testing.T) {
@@ -128,6 +131,112 @@ func TestLOLMethods(t *testing.T) {
 		}
 		if matchTimeline == nil {
 			t.Error("MatchTimeline was nil value")
+		}
+	})
+	t.Run("LOLSummonerByAccount", func(t *testing.T) {
+		summoner, err := client.LOLSummonerByAccount(ctx, testAccountID)
+		if err != nil {
+			t.Error(err)
+		}
+		if summoner == nil {
+			t.Error("Summoner was nil value")
+		} else {
+			if summoner.AccountID != testAccountID {
+				t.Errorf("Expected summoner account id to be %s but got %s", testAccountID, summoner.AccountID)
+			}
+		}
+	})
+	t.Run("LOLSummonerByName", func(t *testing.T) {
+		summoner, err := client.LOLSummonerByName(ctx, testSummonerName)
+		if err != nil {
+			t.Error(err)
+		}
+		if summoner == nil {
+			t.Error("Summoner was nil value")
+		} else {
+			if summoner.Name != testSummonerName {
+				t.Errorf("Expected summoner name to be %s but got %s", testSummonerName, summoner.Name)
+			}
+		}
+	})
+	t.Run("LOLSummonerByPUUID", func(t *testing.T) {
+		summoner, err := client.LOLSummonerByPUUID(ctx, testSummonerPUUID)
+		if err != nil {
+			t.Error(err)
+		}
+		if summoner == nil {
+			t.Error("Summoner was nil value")
+		} else {
+			if summoner.PUUID != testSummonerPUUID {
+				t.Errorf("Expected summoner PUUID to be %s but got %s", testSummonerPUUID, summoner.PUUID)
+			}
+		}
+	})
+	t.Run("LOLSummonerBySummonerID", func(t *testing.T) {
+		summoner, err := client.LOLSummonerBySummonerID(ctx, testSummonerID)
+		if err != nil {
+			t.Error(err)
+		}
+		if summoner == nil {
+			t.Error("Summoner was nil value")
+		} else {
+			if summoner.PUUID != testSummonerPUUID {
+				t.Errorf("Expected summoner id to be %s but got %s", testSummonerID, summoner.ID)
+			}
+		}
+	})
+	t.Run("LOLAllSummonerChampionMastery", func(t *testing.T) {
+		champMastery, err := client.LOLAllSummonerChampionMastery(ctx, testSummonerID)
+		if err != nil {
+			t.Error(err)
+		}
+		if champMastery == nil {
+			t.Error("Summoner was nil value")
+		}
+	})
+	t.Run("LOLSummonerChampionMastery", func(t *testing.T) {
+		champMastery, err := client.LOLSummonerChampionMastery(ctx, testSummonerID, testChampionID)
+		if err != nil {
+			t.Error(err)
+		}
+		if champMastery == nil {
+			t.Error("Summoner was nil value")
+		}
+	})
+	t.Run("LOLSummonerChampionMasteryScore", func(t *testing.T) {
+		_, err := client.LOLSummonerChampionMasteryScore(ctx, testSummonerID)
+		if err != nil {
+			t.Error(err)
+		}
+	})
+	t.Run("LOLChampionRotations", func(t *testing.T) {
+		rotation, err := client.LOLChampionRotations(ctx)
+		if err != nil {
+			t.Error(err)
+		}
+		if rotation == nil {
+			t.Error("Rotation was nil value")
+		}
+	})
+	t.Run("LOLFeaturedGames", func(t *testing.T) {
+		featured, err := client.LOLFeaturedGames(ctx)
+		if err != nil {
+			t.Error(err)
+		}
+		if featured == nil {
+			t.Error("Featured was nil value")
+		}
+	})
+	t.Run("LOLActiveGame", func(t *testing.T) {
+		active, err := client.LOLActiveGame(ctx, testSummonerID)
+		if err != nil {
+			if err.Error() != "Not Found" {
+				t.Error(err)
+			}
+		} else {
+			if active == nil {
+				t.Error("Active game was nil value")
+			}
 		}
 	})
 }
