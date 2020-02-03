@@ -7,97 +7,97 @@ type MatchID int64
 
 //Match represents a MatchDTO
 type Match struct {
-	SeasonID              int32
-	QueueID               int32
-	GameID                MatchID
-	ParticipantIdentities []*ParticipantIdentity
-	GameVersion           string
-	PlatformID            string
-	GameMode              string
-	MapID                 int32
-	GameType              string
-	Teams                 []*TeamStats
-	Participants          []*Participant
-	GameDuration          time.Duration
-	GameCreation          time.Time
+	SeasonID              int32                  `json:"seasonId"`
+	QueueID               int32                  `json:"queueId"`
+	GameID                MatchID                `json:"gameId"`
+	ParticipantIdentities []*ParticipantIdentity `json:"participantIdentities"`
+	GameVersion           string                 `json:"gameVersion"`
+	PlatformID            string                 `json:"platformId"`
+	GameMode              string                 `json:"gameMode"`
+	MapID                 int32                  `json:"mapId"`
+	GameType              string                 `json:"gameType"`
+	Teams                 []*TeamStats           `json:"teams"`
+	Participants          []*Participant         `json:"participants"`
+	GameDuration          time.Duration          `json:"gameDuration"`
+	GameCreation          time.Time              `json:"gameCreation"`
 }
 
 //MatchList represents a MatchListDTO
 type MatchList struct {
-	Matches    []*MatchReference
-	TotalGames int32
-	StartIndex int32
-	EndIndex   int32
+	Matches    []*MatchReference `json:"matches"`
+	TotalGames int32             `json:"totalGames"`
+	StartIndex int32             `json:"startIndex"`
+	EndIndex   int32             `json:"endIndex"`
 }
 
 //MatchReference represents a MatchReferenceDTO
 type MatchReference struct {
-	Lane       string
-	GameID     MatchID
-	Champion   ChampionID
-	PlatformID int32
-	Season     int32
-	Queue      int32
-	Role       string
-	Timestamp  time.Time
+	Lane       string     `json:"lane"`
+	GameID     MatchID    `json:"gameId"`
+	Champion   ChampionID `json:"champion"`
+	PlatformID int32      `json:"platformId"`
+	Season     int32      `json:"season"`
+	Queue      int32      `json:"queue"`
+	Role       string     `json:"role"`
+	Timestamp  time.Time  `json:"timestamp"`
 }
 
 //MatchTimeline represents a MatchTimelineDTO
 type MatchTimeline struct {
-	Frames        []*MatchFrame
-	FrameInterval int64
+	Frames        []*MatchFrame `json:"frames"`
+	FrameInterval int64         `json:"frameInterval"`
 }
 
 //MatchFrame represents a MatchFrameDTO
 type MatchFrame struct {
-	Timestamp         time.Time
-	ParticipantFrames map[string]*MatchParticipantFrame
-	Events            []*MatchEvent
+	Timestamp         time.Time                         `json:"timestamp"`
+	ParticipantFrames map[string]*MatchParticipantFrame `json:"participantFrames"`
+	Events            []*MatchEvent                     `json:"events"`
 }
 
 //MatchParticipantFrame represents a MatchParticipantFrameDTO
 type MatchParticipantFrame struct {
-	TotalGold           int32
-	TeamScore           int32
-	ParticipantID       int32
-	Level               int32
-	CurrentGold         int32
-	MinionsKilled       int32
-	DominionScore       int32
-	Position            *MatchPosition
-	XP                  int32
-	JungleMinionsKilled int32
+	TotalGold           int32          `json:"totalGold"`
+	TeamScore           int32          `json:"teamScore"`
+	ParticipantID       int32          `json:"participantId"`
+	Level               int32          `json:"level"`
+	CurrentGold         int32          `json:"currentGold"`
+	MinionsKilled       int32          `json:"minionsKilled"`
+	DominionScore       int32          `json:"dominionScore"`
+	Position            *MatchPosition `json:"position"`
+	XP                  int32          `json:"xp"`
+	JungleMinionsKilled int32          `json:"jungleMinionsKilled"`
 }
 
 //MatchEvent represents a MatchEventDTO
 type MatchEvent struct {
-	EventType               string
-	TowerType               string
-	TeamID                  int32
-	AscendedType            string
-	KillerID                int32
-	LevelUpType             string
-	PointCaptured           string
-	AssistingParticipantIDs []int32
-	WardType                string
-	MonsterType             string
-	MatchEventType          string
-	SkillSlot               int32
-	VictimID                int32
-	Timestamp               time.Time
-	AfterID                 int32
-	MonsterSubType          string
-	LaneType                string
-	ItemID                  int32
-	ParticipantID           int32
-	BuildingType            string
-	CreatorID               int32
-	Position                *MatchPosition
-	BeforeID                int32
+	EventType               string         `json:"eventType"`
+	TowerType               string         `json:"towerType"`
+	TeamID                  int32          `json:"teamId"`
+	AscendedType            string         `json:"ascendedType"`
+	KillerID                int32          `json:"killerId"`
+	LevelUpType             string         `json:"levelUpType"`
+	PointCaptured           string         `json:"pointCaptured"`
+	AssistingParticipantIDs []int32        `json:"assistingParticpantIds"`
+	WardType                string         `json:"wardType"`
+	MonsterType             string         `json:"monsterType"`
+	MatchEventType          string         `json:"type"`
+	SkillSlot               int32          `json:"skillSlot"`
+	VictimID                int32          `json:"victimId"`
+	Timestamp               time.Time      `json:"timestamp"`
+	AfterID                 int32          `json:"afterId"`
+	MonsterSubType          string         `json:"monsterSubType"`
+	LaneType                string         `json:"laneType"`
+	ItemID                  int32          `json:"itemId"`
+	ParticipantID           int32          `json:"participantId"`
+	BuildingType            string         `json:"buildingType"`
+	CreatorID               int32          `json:"creatorId"`
+	Position                *MatchPosition `json:"position"`
+	BeforeID                int32          `json:"beforeId"`
 }
 
 //MatchPosition represents a MatchPositionDTO
 type MatchPosition struct {
-	Y int32
-	X int32
+	Y int32 `json:"y"`
+	X int32 `json:"x"`
 }
