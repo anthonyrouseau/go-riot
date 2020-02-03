@@ -13,11 +13,11 @@ type PUUID string
 
 //Info represents a SummonerDTO
 type Info struct {
-	ProfileIconID int32
-	Name
-	PUUID
-	SummonerLevel int64
-	RevisionDate  int64
-	ID
-	AccountID account.ID
+	ProfileIconID int32 `json:"profileIconId"`
+	Name          `json:"name"`
+	PUUID         `json:"puuid"`
+	SummonerLevel int64 `json:"summonerLevel"`
+	RevisionDate  int64 `json:"revisionDate"`
+	ID            `json:"id"`
+	AccountID     account.ID `json:"accountId"`
 }
