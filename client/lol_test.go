@@ -23,4 +23,7 @@ func TestLOLChallenger(t *testing.T) {
 	if leagueInfo == nil {
 		t.Error("League Info was nil value")
 	}
+	if leagueInfo.Tier != "CHALLENGER" {
+		t.Errorf("Expected tier to be %s but got %s", "CHALLENGER", leagueInfo.Tier)
+	}
 }
