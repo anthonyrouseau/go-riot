@@ -11,6 +11,7 @@ import (
 	"github.com/anthonyrouseau/go-riot/summoner"
 	"github.com/anthonyrouseau/go-riot/tft"
 	"github.com/anthonyrouseau/go-riot/tournament"
+	"github.com/pkg/errors"
 	"golang.org/x/time/rate"
 )
 
@@ -81,6 +82,7 @@ type client struct {
 	apiKey   string
 	client   *http.Client
 	region   string
+	host     string
 }
 
 //Option is a function used to alter the default client during creation
@@ -124,6 +126,7 @@ func NewClient(key string, options ...Option) (Client, error) {
 		client:   c,
 		region:   "na1",
 		limiters: make(map[routeKey][]*rate.Limiter),
+		host:     "api.riotgames.com",
 	}
 	for _, opt := range options {
 		opt(newClient)
@@ -143,4 +146,15 @@ func (c *client) do(ctx context.Context, req *http.Request, key routeKey) (*http
 		return nil, err
 	}
 	return resp, nil
+}
+
+//checkResponse checks the response from the riot api and returns the body
+func (c *client) checkResponse(resp *http.Response) error {
+	if code := resp.StatusCode; code != 200 {
+		if err, ok := httpCodes[code]; ok {
+			return err
+		}
+		return errors.Errorf("An unexpected error response from Riot with code: %d", code)
+	}
+	return nil
 }

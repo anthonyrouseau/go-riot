@@ -2,6 +2,8 @@ package client
 
 import (
 	"context"
+	"fmt"
+	"net/http"
 
 	"github.com/anthonyrouseau/go-riot/account"
 	"github.com/anthonyrouseau/go-riot/lol"
@@ -10,6 +12,20 @@ import (
 )
 
 func (c *client) LOLChallenger(ctx context.Context, queueName queue.Name) (*lol.LeagueInfo, error) {
+	url := fmt.Sprintf("https://%s.%s/lol/league/v4/challengerleagues/by-queue/%s", c.region, c.host, queueName)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.do(ctx, req, routeLolChallenger)
+	if err != nil {
+		return nil, err
+	}
+	err = c.checkResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
 	return nil, errUnimplemented
 }
 
