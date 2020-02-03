@@ -12,26 +12,26 @@ type ID int32
 
 //CodeInfo reperesents a TournamnetCodeDTO
 type CodeInfo struct {
-	CodeMap string
-	Code
-	Spectators   string
-	Region       string
-	ProviderID   int32
-	TeamSize     int32
-	Participants []string
-	PickType     string
-	ID
-	MetaData string
+	CodeMap      string `json:"map"`
+	Code         `json:"code"`
+	Spectators   string   `json:"spectators"`
+	Region       string   `json:"region"`
+	ProviderID   int32    `json:"providerId"`
+	TeamSize     int32    `json:"teamSize"`
+	Participants []string `json:"participants"`
+	PickType     string   `json:"pickType"`
+	ID           `json:"id"`
+	MetaData     string `json:"metaData"`
 }
 
 //LobbyEvents represents a LobbyEventDTOWrapper
 type LobbyEvents struct {
-	EventList []*LobbyEvent
+	EventList []*LobbyEvent `json:"eventList"`
 }
 
 //LobbyEvent represents a LobbyEventDTO
 type LobbyEvent struct {
-	Timestamp  time.Duration
-	SummonerID summoner.ID
-	EventType  string
+	Timestamp  time.Duration `json:"timestamp"`
+	SummonerID summoner.ID   `json:"summonerId"`
+	EventType  string        `json:"eventType"`
 }
