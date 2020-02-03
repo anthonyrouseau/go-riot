@@ -10,6 +10,7 @@ const (
 	routeChampionRotations
 	routeLolChallenger
 	routeLolSummonerLeagueEntries
+	routeLoLAllLeagueEntries
 	routeLolGrandmaster
 	routeLolLeague
 	routeLolMaster

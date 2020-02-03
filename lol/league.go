@@ -11,8 +11,26 @@ type LeagueID string
 //Tier is the tier within a league
 type Tier string
 
+//These constants are the values to be used for tiers
+const (
+	Iron     Tier = "IRON"
+	Bronze   Tier = "BRONZE"
+	Silver   Tier = "SILVER"
+	Gold     Tier = "GOLD"
+	Platinum Tier = "PLATINUM"
+	Diamond  Tier = "DIAMOND"
+)
+
 //Division is the division within a league
 type Division string
+
+//These constants are the values to be used for divisons
+const (
+	I   Division = "I"
+	II  Division = "II"
+	III Division = "III"
+	IV  Division = "IV"
+)
 
 //LeagueInfo represents a LeagueListDTO
 type LeagueInfo struct {

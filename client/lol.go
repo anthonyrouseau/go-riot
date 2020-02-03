@@ -48,7 +48,21 @@ func (c *client) LOLSummonerLeagueEntries(ctx context.Context, sumID summoner.ID
 }
 
 func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, tier lol.Tier, division lol.Division) ([]*lol.LeagueEntry, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/league/v4/entries/%s/%s/%s", c.region, c.host, queueName, tier, division)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.do(ctx, req, routeLoLAllLeagueEntries)
+	if err != nil {
+		return nil, err
+	}
+	rec := []*lol.LeagueEntry{}
+	leagueEntries, err := c.handleResponse(resp, &rec)
+	if err != nil {
+		return nil, err
+	}
+	return *leagueEntries.(*[]*lol.LeagueEntry), nil
 }
 
 func (c *client) LOLGrandmaster(ctx context.Context, queueName queue.Name) (*lol.LeagueInfo, error) {
