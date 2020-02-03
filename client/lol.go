@@ -41,7 +41,30 @@ func (c *client) LOLChallenger(ctx context.Context, queueName queue.Name) (*lol.
 }
 
 func (c *client) LOLSummonerLeagueEntries(ctx context.Context, sumID summoner.ID) ([]*lol.LeagueEntry, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/league/v4/entries/by-summoner/%s", c.region, c.host, sumID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.do(ctx, req, routeLolSummonerLeagueEntries)
+	if err != nil {
+		return nil, err
+	}
+	err = c.checkResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	leagueEntries := []*lol.LeagueEntry{}
+	err = json.Unmarshal(body, &leagueEntries)
+	if err != nil {
+		return nil, err
+	}
+	return leagueEntries, nil
 }
 
 func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, tier lol.Tier, division lol.Division) ([]*lol.LeagueEntry, error) {
