@@ -2,7 +2,9 @@ package client
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/anthonyrouseau/go-riot/account"
@@ -26,7 +28,16 @@ func (c *client) LOLChallenger(ctx context.Context, queueName queue.Name) (*lol.
 		return nil, err
 	}
 	defer resp.Body.Close()
-	return nil, errUnimplemented
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	leagueInfo := &lol.LeagueInfo{}
+	err = json.Unmarshal(body, leagueInfo)
+	if err != nil {
+		return nil, err
+	}
+	return leagueInfo, nil
 }
 
 func (c *client) LOLSummonerLeagueEntries(ctx context.Context, sumID summoner.ID) ([]*lol.LeagueEntry, error) {
