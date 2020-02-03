@@ -230,6 +230,9 @@ func (c *client) LOLChampionRotations(ctx context.Context) (*lol.Rotation, error
 		return nil, err
 	}
 	rotations, err := c.getValue(ctx, req, routeLolChampionRotations, &lol.Rotation{})
+	if err != nil {
+		return nil, err
+	}
 	return rotations.(*lol.Rotation), nil
 }
 

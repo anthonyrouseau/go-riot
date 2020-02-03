@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	testAPIKey        = "RGAPI-a348803e-d2f9-42c4-a442-c8a5b71dd12d"
+	testAPIKey        = "RGAPI-16d30c4a-0678-42b4-b1dc-c1e8ed1b1a90"
 	testSummonerID    = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
 	testLeagueID      = "c60807e8-6afb-38fd-ab9b-ae8588dc8b27"
 	testMatchID       = 3285199726
@@ -230,7 +230,7 @@ func TestLOLMethods(t *testing.T) {
 	t.Run("LOLActiveGame", func(t *testing.T) {
 		active, err := client.LOLActiveGame(ctx, testSummonerID)
 		if err != nil {
-			if err.Error() != "Not Found" {
+			if err.Error() != errNotFound.Error() {
 				t.Error(err)
 			}
 		} else {
