@@ -2,7 +2,10 @@ package client
 
 import (
 	"context"
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
+	"reflect"
 
 	"github.com/anthonyrouseau/go-riot/account"
 	"github.com/anthonyrouseau/go-riot/lol"
@@ -157,4 +160,27 @@ func (c *client) checkResponse(resp *http.Response) error {
 		return errors.Errorf("An unexpected error response from Riot with code: %d", code)
 	}
 	return nil
+}
+
+//handleResponse takes a response, checks if ok, then unmarshals into the rec
+//(rec must be a non-nil pointer since it is being provided to json.Unmarshal)
+func (c *client) handleResponse(resp *http.Response, rec interface{}) (interface{}, error) {
+	rv := reflect.ValueOf(rec)
+	if rv.Kind() != reflect.Ptr || rv.IsNil() {
+		return nil, errors.New("Value passed to handleResponse is not valid. Must be non-nil pointer")
+	}
+	err := c.checkResponse(resp)
+	if err != nil {
+		return nil, err
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(body, rec)
+	if err != nil {
+		return nil, err
+	}
+	return rec, nil
 }

@@ -2,9 +2,7 @@ package client
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/anthonyrouseau/go-riot/account"
@@ -23,21 +21,11 @@ func (c *client) LOLChallenger(ctx context.Context, queueName queue.Name) (*lol.
 	if err != nil {
 		return nil, err
 	}
-	err = c.checkResponse(resp)
+	leagueInfo, err := c.handleResponse(resp, &lol.LeagueInfo{})
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	leagueInfo := &lol.LeagueInfo{}
-	err = json.Unmarshal(body, leagueInfo)
-	if err != nil {
-		return nil, err
-	}
-	return leagueInfo, nil
+	return leagueInfo.(*lol.LeagueInfo), nil
 }
 
 func (c *client) LOLSummonerLeagueEntries(ctx context.Context, sumID summoner.ID) ([]*lol.LeagueEntry, error) {
@@ -50,21 +38,13 @@ func (c *client) LOLSummonerLeagueEntries(ctx context.Context, sumID summoner.ID
 	if err != nil {
 		return nil, err
 	}
-	err = c.checkResponse(resp)
+	rec := []*lol.LeagueEntry{}
+	leagueEntries, err := c.handleResponse(resp, &rec)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	leagueEntries := []*lol.LeagueEntry{}
-	err = json.Unmarshal(body, &leagueEntries)
-	if err != nil {
-		return nil, err
-	}
-	return leagueEntries, nil
+	entries := *leagueEntries.(*[]*lol.LeagueEntry)
+	return entries, nil
 }
 
 func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, tier lol.Tier, division lol.Division) ([]*lol.LeagueEntry, error) {
