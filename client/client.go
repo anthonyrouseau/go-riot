@@ -69,15 +69,35 @@ type Client interface {
 	Tournament(context.Context) (tournament.ID, error)
 	Variant() variant
 	APIKey() string
+	Region() string
 }
 
 //client wraps an http client and implements the Client interface.
 //The client may have a limiters map that will rate limit according to the Riot API guidelines for that client variant
+//A client can only have one region associated with it
 type client struct {
 	limiters map[routeKey][]*rate.Limiter
 	variant  variant
 	apiKey   string
 	client   *http.Client
+	region   string
+}
+
+//Option is a function used to alter the default client during creation
+type Option func(*client)
+
+//SetRegion returns a ClientOption which sets the clients reigon to the given string
+func SetRegion(region string) Option {
+	return func(c *client) {
+		c.region = region
+	}
+}
+
+//SetVariant returns a ClientOption which sets the client variant and makes any other necessary changes for the type of client
+func SetVariant(v variant) Option {
+	return func(c *client) {
+		c.variant = v
+	}
 }
 
 //Variant returns the variant of the client
@@ -90,28 +110,25 @@ func (c *client) APIKey() string {
 	return c.apiKey
 }
 
-//NewClient returns a Client with variant as unspecified
-func NewClient(key string) (Client, error) {
-	c := &http.Client{}
-	return &client{variant: unspecifiedClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
+//Region returns the region of the client
+func (c *client) Region() string {
+	return c.region
 }
 
-//NewDevClient returns a Client with variant dev
-func NewDevClient(key string) (Client, error) {
+//NewClient returns a default Client unless options are specified
+func NewClient(key string, options ...Option) (Client, error) {
 	c := &http.Client{}
-	return &client{variant: devClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
-}
-
-//NewPersonalClient returns a Client with variant personal
-func NewPersonalClient(key string) (Client, error) {
-	c := &http.Client{}
-	return &client{variant: personalClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
-}
-
-//NewProductionClient returns a Client with variant production
-func NewProductionClient(key string) (Client, error) {
-	c := &http.Client{}
-	return &client{variant: productionClient, apiKey: key, client: c, limiters: make(map[routeKey][]*rate.Limiter)}, nil
+	newClient := &client{
+		variant:  unspecifiedClient,
+		apiKey:   key,
+		client:   c,
+		region:   "na1",
+		limiters: make(map[routeKey][]*rate.Limiter),
+	}
+	for _, opt := range options {
+		opt(newClient)
+	}
+	return newClient, nil
 }
 
 //do wraps the http.Do method and adds the APIKey to the request header
