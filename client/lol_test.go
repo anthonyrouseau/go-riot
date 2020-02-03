@@ -12,7 +12,7 @@ const (
 
 func TestLOLChallenger(t *testing.T) {
 	ctx := context.Background()
-	client, err := NewDevClient(testAPIKey)
+	client, err := NewClient(testAPIKey, SetVariant(devClient))
 	if err != nil {
 		t.Error(err)
 	}
@@ -21,6 +21,6 @@ func TestLOLChallenger(t *testing.T) {
 		t.Error(err)
 	}
 	if leagueInfo == nil {
-		t.Error("Returned value is nil")
+		t.Error("League Info was nil value")
 	}
 }
