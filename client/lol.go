@@ -100,11 +100,37 @@ func (c *client) LOLLeague(ctx context.Context, leagueID lol.LeagueID) (*lol.Lea
 }
 
 func (c *client) LOLMaster(ctx context.Context, queueName queue.Name) (*lol.LeagueInfo, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/league/v4/masterleagues/by-queue/%s", c.region, c.host, queueName)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.do(ctx, req, routeLolChallenger)
+	if err != nil {
+		return nil, err
+	}
+	leagueInfo, err := c.handleResponse(resp, &lol.LeagueInfo{})
+	if err != nil {
+		return nil, err
+	}
+	return leagueInfo.(*lol.LeagueInfo), nil
 }
 
 func (c *client) LOLMatch(ctx context.Context, matchID lol.MatchID) (*lol.Match, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/match/v4/matches/%d", c.region, c.host, matchID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.do(ctx, req, routeLolMatch)
+	if err != nil {
+		return nil, err
+	}
+	match, err := c.handleResponse(resp, &lol.Match{})
+	if err != nil {
+		return nil, err
+	}
+	return match.(*lol.Match), nil
 }
 
 func (c *client) LOLAccountMatches(ctx context.Context, accountID account.ID) (*lol.MatchList, error) {

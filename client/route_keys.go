@@ -14,6 +14,7 @@ const (
 	routeLolGrandmaster
 	routeLolLeague
 	routeLolMaster
+	routeLolMatch
 	routeStatus
 	routeLolAccountMatches
 	routeLolMatchTimeline

@@ -19,7 +19,7 @@ type Match struct {
 	Teams                 []*TeamStats           `json:"teams"`
 	Participants          []*Participant         `json:"participants"`
 	GameDuration          time.Duration          `json:"gameDuration"`
-	GameCreation          time.Time              `json:"gameCreation"`
+	GameCreation          int64                  `json:"gameCreation"`
 }
 
 //MatchList represents a MatchListDTO

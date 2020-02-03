@@ -11,6 +11,7 @@ const (
 	testAPIKey     = "RGAPI-a348803e-d2f9-42c4-a442-c8a5b71dd12d"
 	testSummonerID = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
 	testLeagueID   = "c60807e8-6afb-38fd-ab9b-ae8588dc8b27"
+	testMatchID    = 3285199726
 )
 
 func TestLOLMethods(t *testing.T) {
@@ -81,6 +82,32 @@ func TestLOLMethods(t *testing.T) {
 		} else {
 			if leagueInfo.ID != testLeagueID {
 				t.Errorf("Expected league id to be %s but got %s", testLeagueID, leagueInfo.ID)
+			}
+		}
+	})
+	t.Run("LOLMaster", func(t *testing.T) {
+		leagueInfo, err := client.LOLMaster(ctx, queue.RankedSolo5x5)
+		if err != nil {
+			t.Error(err)
+		}
+		if leagueInfo == nil {
+			t.Error("League Info was nil value")
+		} else {
+			if leagueInfo.Tier != "MASTER" {
+				t.Errorf("Expected tier to be %s but got %s", "MASTER", leagueInfo.Tier)
+			}
+		}
+	})
+	t.Run("LOLMatch", func(t *testing.T) {
+		match, err := client.LOLMatch(ctx, testMatchID)
+		if err != nil {
+			t.Error(err)
+		}
+		if match == nil {
+			t.Error("Match was nil value")
+		} else {
+			if match.GameID != testMatchID {
+				t.Errorf("Expected match id to be %d but got %d", testMatchID, match.GameID)
 			}
 		}
 	})
