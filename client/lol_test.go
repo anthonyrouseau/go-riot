@@ -57,4 +57,17 @@ func TestLOLMethods(t *testing.T) {
 			}
 		}
 	})
+	t.Run("LOLGrandmaster", func(t *testing.T) {
+		leagueInfo, err := client.LOLGrandmaster(ctx, queue.RankedSolo5x5)
+		if err != nil {
+			t.Error(err)
+		}
+		if leagueInfo == nil {
+			t.Error("League Info was nil value")
+		} else {
+			if leagueInfo.Tier != "GRANDMASTER" {
+				t.Errorf("Expected tier to be %s but got %s", "GRANDMASTER", leagueInfo.Tier)
+			}
+		}
+	})
 }

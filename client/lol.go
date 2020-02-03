@@ -66,7 +66,20 @@ func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, 
 }
 
 func (c *client) LOLGrandmaster(ctx context.Context, queueName queue.Name) (*lol.LeagueInfo, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/league/v4/grandmasterleagues/by-queue/%s", c.region, c.host, queueName)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	resp, err := c.do(ctx, req, routeLolChallenger)
+	if err != nil {
+		return nil, err
+	}
+	leagueInfo, err := c.handleResponse(resp, &lol.LeagueInfo{})
+	if err != nil {
+		return nil, err
+	}
+	return leagueInfo.(*lol.LeagueInfo), nil
 }
 
 func (c *client) LOLLeague(ctx context.Context, leagueID lol.LeagueID) (*lol.LeagueInfo, error) {
