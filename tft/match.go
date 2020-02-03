@@ -9,23 +9,23 @@ type MatchID string
 
 //Match represents a MatchDTO
 type Match struct {
-	Info     *MatchInfo
-	Metadata *MatchMetaData
+	Info     *MatchInfo     `json:"info"`
+	Metadata *MatchMetaData `json:"metadata"`
 }
 
 //MatchInfo represents an InfoDTO
 type MatchInfo struct {
-	GameDatetime time.Time
-	Participants []*Participant
-	SetNumber    int32
-	GameLength   time.Duration
-	QueueID      int32
-	GameVersion  string
+	GameDatetime time.Time      `json:"game_datetime"`
+	Participants []*Participant `json:"participants"`
+	SetNumber    int32          `json:"tft_set_number"`
+	GameLength   time.Duration  `json:"game_length"`
+	QueueID      int32          `json:"queue_id"`
+	GameVersion  string         `json:"game_version"`
 }
 
 //MatchMetaData represents a MetaDataDTO
 type MatchMetaData struct {
-	DataVersion  string
-	Participants []summoner.PUUID
-	MatchID      MatchID
+	DataVersion  string           `json:"data_version"`
+	Participants []summoner.PUUID `json:"participants"`
+	MatchID      MatchID          `json:"match_id"`
 }
