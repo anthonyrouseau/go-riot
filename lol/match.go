@@ -35,11 +35,11 @@ type MatchReference struct {
 	Lane       string     `json:"lane"`
 	GameID     MatchID    `json:"gameId"`
 	Champion   ChampionID `json:"champion"`
-	PlatformID int32      `json:"platformId"`
+	PlatformID string     `json:"platformId"`
 	Season     int32      `json:"season"`
 	Queue      int32      `json:"queue"`
 	Role       string     `json:"role"`
-	Timestamp  time.Time  `json:"timestamp"`
+	Timestamp  int64      `json:"timestamp"`
 }
 
 //MatchTimeline represents a MatchTimelineDTO
@@ -50,7 +50,7 @@ type MatchTimeline struct {
 
 //MatchFrame represents a MatchFrameDTO
 type MatchFrame struct {
-	Timestamp         time.Time                         `json:"timestamp"`
+	Timestamp         int64                             `json:"timestamp"`
 	ParticipantFrames map[string]*MatchParticipantFrame `json:"participantFrames"`
 	Events            []*MatchEvent                     `json:"events"`
 }
@@ -84,7 +84,7 @@ type MatchEvent struct {
 	MatchEventType          string         `json:"type"`
 	SkillSlot               int32          `json:"skillSlot"`
 	VictimID                int32          `json:"victimId"`
-	Timestamp               time.Time      `json:"timestamp"`
+	Timestamp               int64          `json:"timestamp"`
 	AfterID                 int32          `json:"afterId"`
 	MonsterSubType          string         `json:"monsterSubType"`
 	LaneType                string         `json:"laneType"`

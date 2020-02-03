@@ -184,3 +184,17 @@ func (c *client) handleResponse(resp *http.Response, rec interface{}) (interface
 	}
 	return rec, nil
 }
+
+//getValue wraps the client methods do and handleResponse
+//(rec must be a non-nil pointer since it is being provided to json.Unmarshal)
+func (c *client) getValue(ctx context.Context, req *http.Request, routeKey routeKey, rec interface{}) (interface{}, error) {
+	resp, err := c.do(ctx, req, routeKey)
+	if err != nil {
+		return nil, err
+	}
+	value, err := c.handleResponse(resp, rec)
+	if err != nil {
+		return nil, err
+	}
+	return value, nil
+}

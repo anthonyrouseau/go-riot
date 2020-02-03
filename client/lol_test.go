@@ -12,6 +12,7 @@ const (
 	testSummonerID = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
 	testLeagueID   = "c60807e8-6afb-38fd-ab9b-ae8588dc8b27"
 	testMatchID    = 3285199726
+	testAccountID  = "182BwdvZQMIpZwCk4vGZiHs71qSK18Bo9Ll6zBU2LQ"
 )
 
 func TestLOLMethods(t *testing.T) {
@@ -109,6 +110,24 @@ func TestLOLMethods(t *testing.T) {
 			if match.GameID != testMatchID {
 				t.Errorf("Expected match id to be %d but got %d", testMatchID, match.GameID)
 			}
+		}
+	})
+	t.Run("LOLAccountMatches", func(t *testing.T) {
+		matchList, err := client.LOLAccountMatches(ctx, testAccountID)
+		if err != nil {
+			t.Error(err)
+		}
+		if matchList == nil {
+			t.Error("MatchList was nil value")
+		}
+	})
+	t.Run("LOLMatchTimeline", func(t *testing.T) {
+		matchTimeline, err := client.LOLMatchTimeline(ctx, testMatchID)
+		if err != nil {
+			t.Error(err)
+		}
+		if matchTimeline == nil {
+			t.Error("MatchTimeline was nil value")
 		}
 	})
 }

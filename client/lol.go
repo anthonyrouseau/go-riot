@@ -17,11 +17,7 @@ func (c *client) LOLChallenger(ctx context.Context, queueName queue.Name) (*lol.
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.do(ctx, req, routeLolChallenger)
-	if err != nil {
-		return nil, err
-	}
-	leagueInfo, err := c.handleResponse(resp, &lol.LeagueInfo{})
+	leagueInfo, err := c.getValue(ctx, req, routeLolChallenger, &lol.LeagueInfo{})
 	if err != nil {
 		return nil, err
 	}
@@ -34,17 +30,12 @@ func (c *client) LOLSummonerLeagueEntries(ctx context.Context, sumID summoner.ID
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.do(ctx, req, routeLolSummonerLeagueEntries)
-	if err != nil {
-		return nil, err
-	}
 	rec := []*lol.LeagueEntry{}
-	leagueEntries, err := c.handleResponse(resp, &rec)
+	leagueEntries, err := c.getValue(ctx, req, routeLolSummonerLeagueEntries, &rec)
 	if err != nil {
 		return nil, err
 	}
-	entries := *leagueEntries.(*[]*lol.LeagueEntry)
-	return entries, nil
+	return *leagueEntries.(*[]*lol.LeagueEntry), nil
 }
 
 func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, tier lol.Tier, division lol.Division) ([]*lol.LeagueEntry, error) {
@@ -53,12 +44,8 @@ func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, 
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.do(ctx, req, routeLoLAllLeagueEntries)
-	if err != nil {
-		return nil, err
-	}
 	rec := []*lol.LeagueEntry{}
-	leagueEntries, err := c.handleResponse(resp, &rec)
+	leagueEntries, err := c.getValue(ctx, req, routeLoLAllLeagueEntries, &rec)
 	if err != nil {
 		return nil, err
 	}
@@ -71,11 +58,7 @@ func (c *client) LOLGrandmaster(ctx context.Context, queueName queue.Name) (*lol
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.do(ctx, req, routeLolChallenger)
-	if err != nil {
-		return nil, err
-	}
-	leagueInfo, err := c.handleResponse(resp, &lol.LeagueInfo{})
+	leagueInfo, err := c.getValue(ctx, req, routeLolGrandmaster, &lol.LeagueInfo{})
 	if err != nil {
 		return nil, err
 	}
@@ -88,11 +71,7 @@ func (c *client) LOLLeague(ctx context.Context, leagueID lol.LeagueID) (*lol.Lea
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.do(ctx, req, routeLolLeague)
-	if err != nil {
-		return nil, err
-	}
-	leagueInfo, err := c.handleResponse(resp, &lol.LeagueInfo{})
+	leagueInfo, err := c.getValue(ctx, req, routeLolLeague, &lol.LeagueInfo{})
 	if err != nil {
 		return nil, err
 	}
@@ -105,11 +84,7 @@ func (c *client) LOLMaster(ctx context.Context, queueName queue.Name) (*lol.Leag
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.do(ctx, req, routeLolChallenger)
-	if err != nil {
-		return nil, err
-	}
-	leagueInfo, err := c.handleResponse(resp, &lol.LeagueInfo{})
+	leagueInfo, err := c.getValue(ctx, req, routeLolChallenger, &lol.LeagueInfo{})
 	if err != nil {
 		return nil, err
 	}
@@ -122,11 +97,7 @@ func (c *client) LOLMatch(ctx context.Context, matchID lol.MatchID) (*lol.Match,
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.do(ctx, req, routeLolMatch)
-	if err != nil {
-		return nil, err
-	}
-	match, err := c.handleResponse(resp, &lol.Match{})
+	match, err := c.getValue(ctx, req, routeLolMatch, &lol.Match{})
 	if err != nil {
 		return nil, err
 	}
@@ -134,11 +105,29 @@ func (c *client) LOLMatch(ctx context.Context, matchID lol.MatchID) (*lol.Match,
 }
 
 func (c *client) LOLAccountMatches(ctx context.Context, accountID account.ID) (*lol.MatchList, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/match/v4/matchlists/by-account/%s", c.region, c.host, accountID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	matchList, err := c.getValue(ctx, req, routeLolAccountMatches, &lol.MatchList{})
+	if err != nil {
+		return nil, err
+	}
+	return matchList.(*lol.MatchList), nil
 }
 
 func (c *client) LOLMatchTimeline(ctx context.Context, matchID lol.MatchID) (*lol.MatchTimeline, error) {
-	return nil, errUnimplemented
+	url := fmt.Sprintf("https://%s.%s/lol/match/v4/timelines/by-match/%d", c.region, c.host, matchID)
+	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+	matchTimeline, err := c.getValue(ctx, req, routeLolMatchTimeline, &lol.MatchTimeline{})
+	if err != nil {
+		return nil, err
+	}
+	return matchTimeline.(*lol.MatchTimeline), nil
 }
 
 func (c *client) LOLSummonerByAccount(ctx context.Context, accountID account.ID) (*summoner.Info, error) {
