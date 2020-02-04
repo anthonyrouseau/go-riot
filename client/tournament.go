@@ -15,7 +15,7 @@ func (c *client) TournamentMatch(ctx context.Context, matchID lol.MatchID, tourC
 	return nil, errUnimplemented
 }
 
-func (c *client) TournamentCodes(ctx context.Context) ([]tournament.Code, error) {
+func (c *client) TournamentCodes(ctx context.Context, tournamentID tournament.ID, options ...tournament.CodeRequestOption) ([]tournament.Code, error) {
 	return nil, errUnimplemented
 }
 
@@ -31,10 +31,10 @@ func (c *client) LobbyEvents(ctx context.Context, tourCode tournament.Code) ([]*
 	return nil, errUnimplemented
 }
 
-func (c *client) TournamentProvider(ctx context.Context) (int32, error) {
+func (c *client) TournamentProvider(ctx context.Context, region tournament.Region, url string) (int32, error) {
 	return -1, errUnimplemented
 }
 
-func (c *client) Tournament(ctx context.Context) (tournament.ID, error) {
+func (c *client) Tournament(ctx context.Context, provID int32, options ...tournament.RegistrationOption) (tournament.ID, error) {
 	return -1, errUnimplemented
 }

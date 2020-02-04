@@ -65,12 +65,12 @@ type Client interface {
 	ThirdPartyCode(context.Context, summoner.ID) (string, error)
 	TournamentMatchIDs(context.Context, tournament.Code) ([]lol.MatchID, error)
 	TournamentMatch(context.Context, lol.MatchID, tournament.Code) (*lol.Match, error)
-	TournamentCodes(context.Context) ([]tournament.Code, error)
+	TournamentCodes(ctx context.Context, tournamentID tournament.ID, options ...tournament.CodeRequestOption) ([]tournament.Code, error)
 	TournamanetCodeInfo(context.Context, tournament.Code) (*tournament.CodeInfo, error)
 	UpdateTournamentCode(context.Context, tournament.Code) error
 	LobbyEvents(context.Context, tournament.Code) ([]*tournament.LobbyEvents, error)
-	TournamentProvider(context.Context) (int32, error)
-	Tournament(context.Context) (tournament.ID, error)
+	TournamentProvider(ctx context.Context, region tournament.Region, url string) (int32, error)
+	Tournament(ctx context.Context, providerID int32, options ...tournament.RegistrationOption) (tournament.ID, error)
 	Variant() variant
 	APIKey() string
 	Region() string
