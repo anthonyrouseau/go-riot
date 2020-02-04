@@ -1,7 +1,5 @@
 package tft
 
-import "time"
-
 import "github.com/anthonyrouseau/go-riot/summoner"
 
 //MatchID is the id for a match
@@ -15,10 +13,10 @@ type Match struct {
 
 //MatchInfo represents an InfoDTO
 type MatchInfo struct {
-	GameDatetime time.Time      `json:"game_datetime"`
+	GameDatetime int64          `json:"game_datetime"`
 	Participants []*Participant `json:"participants"`
 	SetNumber    int32          `json:"tft_set_number"`
-	GameLength   time.Duration  `json:"game_length"`
+	GameLength   float64        `json:"game_length"`
 	QueueID      int32          `json:"queue_id"`
 	GameVersion  string         `json:"game_version"`
 }

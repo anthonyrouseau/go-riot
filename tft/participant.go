@@ -1,8 +1,6 @@
 package tft
 
 import (
-	"time"
-
 	"github.com/anthonyrouseau/go-riot/summoner"
 )
 
@@ -11,7 +9,7 @@ type Participant struct {
 	Placement            int32          `json:"placement"`
 	Level                int32          `json:"level"`
 	LastRound            int32          `json:"last_round"`
-	TimeEliminated       time.Duration  `json:"time_eliminated"`
+	TimeEliminated       float64        `json:"time_eliminated"`
 	Companion            *Companion     `json:"companion"`
 	Traits               []*Trait       `json:"traits"`
 	PlayersEliminated    int32          `json:"players_eliminated"`

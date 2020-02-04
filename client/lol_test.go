@@ -8,17 +8,19 @@ import (
 )
 
 const (
-	testAPIKey        = "RGAPI-16d30c4a-0678-42b4-b1dc-c1e8ed1b1a90"
-	testSummonerID    = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
-	testLeagueID      = "c60807e8-6afb-38fd-ab9b-ae8588dc8b27"
-	testMatchID       = 3285199726
-	testAccountID     = "182BwdvZQMIpZwCk4vGZiHs71qSK18Bo9Ll6zBU2LQ"
-	testSummonerName  = "C9 Sneaky"
-	testSummonerPUUID = "Uc6OVbDglCiUrKxrRvcqRmo6RY_EKiFFy5CqNet57wEcFyzA1ElI5C8WUuPvp1eLFgYrmLajMGpsyA"
-	testChampionID    = 202
+	testAPIKey = "RGAPI-16d30c4a-0678-42b4-b1dc-c1e8ed1b1a90"
 )
 
 func TestLOLMethods(t *testing.T) {
+	const (
+		testSummonerID    = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
+		testLeagueID      = "c60807e8-6afb-38fd-ab9b-ae8588dc8b27"
+		testMatchID       = 3285199726
+		testAccountID     = "182BwdvZQMIpZwCk4vGZiHs71qSK18Bo9Ll6zBU2LQ"
+		testSummonerName  = "C9 Sneaky"
+		testSummonerPUUID = "Uc6OVbDglCiUrKxrRvcqRmo6RY_EKiFFy5CqNet57wEcFyzA1ElI5C8WUuPvp1eLFgYrmLajMGpsyA"
+		testChampionID    = 202
+	)
 	ctx := context.Background()
 	client, err := NewClient(testAPIKey, SetVariant(devClient))
 	if err != nil {

@@ -25,6 +25,7 @@ const (
 	routeLolSummonerByPUUID
 	routeLolSummonerBySummonerID
 	routeTftChallenger
+	routeTftAllLeagueEntries
 	routeTftSummonerLeagueEntries
 	routeTftGrandmaster
 	routeTftLeague

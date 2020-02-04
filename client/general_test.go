@@ -6,6 +6,9 @@ import (
 )
 
 func TestGeneralMethods(t *testing.T) {
+	const (
+		testSummonerID = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
+	)
 	ctx := context.Background()
 	client, err := NewClient(testAPIKey, SetVariant(devClient))
 	if err != nil {
