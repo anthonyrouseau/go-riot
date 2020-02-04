@@ -53,7 +53,7 @@ pass optional values to the API calls.
 ## Rate Limiting
 
 If a client is created with a variant other than UnspecifiedClient, then calls using the client will be rate limited according
-to the values allowed by Riot. The client is unable to determine rate limiting form the API key alone so make sure to set
+to the values allowed by Riot. The client is unable to determine rate limiting from the API key alone so make sure to set
 the client variant if rate limiting will not be handled elsewhere.
 
 ## Examples
