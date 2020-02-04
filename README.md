@@ -14,7 +14,7 @@ Other packages can be installed using a similar format.
 
 ## Example Use
 
-````
+````Go
 package main
 
 import (
