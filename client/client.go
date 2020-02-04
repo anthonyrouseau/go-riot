@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"reflect"
@@ -65,10 +66,10 @@ type Client interface {
 	ThirdPartyCode(context.Context, summoner.ID) (string, error)
 	TournamentMatchIDs(context.Context, tournament.Code) ([]lol.MatchID, error)
 	TournamentMatch(context.Context, lol.MatchID, tournament.Code) (*lol.Match, error)
-	TournamentCodes(ctx context.Context, tournamentID tournament.ID, options ...tournament.CodeRequestOption) ([]tournament.Code, error)
-	TournamanetCodeInfo(context.Context, tournament.Code) (*tournament.CodeInfo, error)
+	TournamentCodes(ctx context.Context, tournamentID tournament.ID, body *tournament.CodeRequestBody, options ...tournament.CodeRequestOption) ([]tournament.Code, error)
+	TournamentCodeInfo(context.Context, tournament.Code) (*tournament.CodeInfo, error)
 	UpdateTournamentCode(context.Context, tournament.Code) error
-	LobbyEvents(context.Context, tournament.Code) ([]*tournament.LobbyEvents, error)
+	LobbyEvents(context.Context, tournament.Code) (*tournament.LobbyEvents, error)
 	TournamentProvider(ctx context.Context, region tournament.Region, url string) (int32, error)
 	Tournament(ctx context.Context, providerID int32, options ...tournament.RegistrationOption) (tournament.ID, error)
 	Variant() variant
@@ -154,6 +155,19 @@ func (c *client) do(ctx context.Context, req *http.Request, key routeKey) (*http
 //checkResponse checks the response from the riot api and returns the body
 func (c *client) checkResponse(resp *http.Response) error {
 	if code := resp.StatusCode; code != 200 {
+		if code == 400 {
+			body, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				return err
+			}
+			defer resp.Body.Close()
+			newError := &riotError{}
+			err = json.Unmarshal(body, newError)
+			if err != nil {
+				return err
+			}
+			return newError.Format()
+		}
 		if err, ok := httpCodes[code]; ok {
 			return err
 		}
@@ -178,6 +192,9 @@ func (c *client) handleResponse(resp *http.Response, rec interface{}) (interface
 	if err != nil {
 		return nil, err
 	}
+	if resp.StatusCode != 200 {
+		fmt.Println(body)
+	}
 	err = json.Unmarshal(body, rec)
 	if err != nil {
 		return nil, err
@@ -197,4 +214,34 @@ func (c *client) getValue(ctx context.Context, req *http.Request, routeKey route
 		return nil, err
 	}
 	return value, nil
+}
+
+//regionalRouting takes a platform routing value (e.g. na1) and returns a regional routing value (e.g. americas)
+//some routes use regional routing rather than platform routing (e.g. tft match routes, and tournament routes)
+func regionalRouting(r string) string {
+	switch r {
+	case "na1":
+		fallthrough
+	case "la1":
+		fallthrough
+	case "la2":
+		fallthrough
+	case "br1":
+		fallthrough
+	case "oc1":
+		return "americas"
+	case "jp1":
+		fallthrough
+	case "kr":
+		return "asia"
+	case "eun1":
+		fallthrough
+	case "euw1":
+		fallthrough
+	case "tr1":
+		fallthrough
+	case "ru":
+		return "europe"
+	}
+	return "americas"
 }

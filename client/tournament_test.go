@@ -2,18 +2,20 @@ package client
 
 import (
 	"context"
-	"github.com/anthonyrouseau/go-riot/tournament"
 	"testing"
+
+	"github.com/anthonyrouseau/go-riot/tournament"
 )
 
 func TestTournamentMethods(t *testing.T) {
 	const (
-		testTournamentCode = ""
+		testTournamentCode = "NA1908-TOURNAMENTCODE0001"
 		testMatchID        = 0
 		testRegion         = tournament.NA
-		testURL            = ""
-		testProviderID     = 0
-		testTournamentID   = 0
+		testURL            = "http://localhost/cb:80"
+		testProviderID     = 168
+		testTournamentID   = 1908
+		testSummonerID     = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
 	)
 	ctx := context.Background()
 	client, err := NewClient(testAPIKey, SetVariant(devClient))
@@ -40,13 +42,21 @@ func TestTournamentMethods(t *testing.T) {
 		}
 	})
 	t.Run("TournamentCodes", func(t *testing.T) {
-		_, err := client.TournamentCodes(ctx, testTournamentID)
+		testTournamentCodeRequestBody := &tournament.CodeRequestBody{
+			SpectatorType:      tournament.None,
+			TeamSize:           5,
+			PickType:           tournament.TournamentDraft,
+			AllowedSummonerIDs: nil,
+			MapType:            tournament.SummonersRift,
+			Metadata:           "metadata",
+		}
+		_, err := client.TournamentCodes(ctx, testTournamentID, testTournamentCodeRequestBody)
 		if err != nil {
 			t.Error(err)
 		}
 	})
 	t.Run("TournamentCodeInfo", func(t *testing.T) {
-		codeInfo, err := client.TournamanetCodeInfo(ctx, testTournamentCode)
+		codeInfo, err := client.TournamentCodeInfo(ctx, testTournamentCode)
 		if err != nil {
 			t.Error(err)
 		}

@@ -170,33 +170,3 @@ func (c *client) TFTSummonerBySummonerID(ctx context.Context, sumID summoner.ID)
 	}
 	return summonerInfo.(*summoner.Info), nil
 }
-
-//regionalRouting takes a platform routing value (e.g. na1) and returns a regional routing value (e.g. americas)
-//some routes use regional routing rather than platform routing (e.g. tft match routes)
-func regionalRouting(r string) string {
-	switch r {
-	case "na1":
-		fallthrough
-	case "la1":
-		fallthrough
-	case "la2":
-		fallthrough
-	case "br1":
-		fallthrough
-	case "oc1":
-		return "americas"
-	case "jp1":
-		fallthrough
-	case "kr":
-		return "asia"
-	case "eun1":
-		fallthrough
-	case "euw1":
-		fallthrough
-	case "tr1":
-		fallthrough
-	case "ru":
-		return "europe"
-	}
-	return "americas"
-}

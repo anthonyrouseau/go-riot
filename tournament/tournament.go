@@ -1,7 +1,5 @@
 package tournament
 
-import "time"
-
 import "github.com/anthonyrouseau/go-riot/summoner"
 
 //Code is a tournament code
@@ -49,15 +47,15 @@ type LobbyEvents struct {
 
 //LobbyEvent represents a LobbyEventDTO
 type LobbyEvent struct {
-	Timestamp  time.Duration `json:"timestamp"`
-	SummonerID summoner.ID   `json:"summonerId"`
-	EventType  string        `json:"eventType"`
+	Timestamp  string      `json:"timestamp"`
+	SummonerID summoner.ID `json:"summonerId"`
+	EventType  string      `json:"eventType"`
 }
 
 //Registration are the parameters passed in the body when creating a tournament
 type Registration struct {
-	Name       string
-	ProviderID int32
+	Name       *string `json:"name"`
+	ProviderID int32   `json:"providerId"`
 }
 
 //RegistrationOption is a function that allows you to change the default registration parameters
@@ -66,15 +64,63 @@ type RegistrationOption func(*Registration)
 //RegistrationName is a RegistrationOption that updates the name parameter
 func (r *Registration) RegistrationName(n string) func(*Registration) {
 	return func(r *Registration) {
-		r.Name = n
+		r.Name = &n
 	}
 }
 
-//CodeRequest are the parameters passed in the body when requesting tournament codes
+//CodeRequest are the optional parameters for requesting tournament codes
 type CodeRequest struct {
-	Count        int32
-	TournamentID ID
+	Count int32 `json:"count"`
 }
+
+//CodeRequestBody are the required body parameters for requesting tournament codes
+type CodeRequestBody struct {
+	AllowedSummonerIDs []summoner.ID `json:"allowedSummonerIds,omitempty"`
+	MapType            MapType       `json:"mapType"`
+	Metadata           string        `json:"metadata"`
+	PickType           PickType      `json:"pickType"`
+	SpectatorType      SpectatorType `json:"spectatorType"`
+	TeamSize           int32         `json:"teamSize"`
+}
+
+//CodeUpdateRequest is the body for a put request to tournament code
+type CodeUpdateRequest struct {
+	AllowedSummonerIDs []summoner.ID  `json:"allowedSummonerIds,omitempty"`
+	MapType            *MapType       `json:"mapType,omitempty"`
+	PickType           *PickType      `json:"pickType,omitempty"`
+	SpectatorType      *SpectatorType `json:"spectatorType"`
+}
+
+//MapType is the type for a code request map type
+type MapType string
+
+//Possible values for MapType
+const (
+	SummonersRift   MapType = "SUMMONERS_RIFT"
+	TwistedTreeline MapType = "TWISTED_TREELINE"
+	HowlingAbyss    MapType = "HOWLING_ABYSS"
+)
+
+//PickType is the type for a code request pick type
+type PickType string
+
+//Possible values for PickType
+const (
+	BlindPick       PickType = "BLIND_PICK"
+	DraftMode       PickType = "DRAFT_MODE"
+	AllRandom       PickType = "ALL_RANDOM"
+	TournamentDraft PickType = "TOURNAMENT_DRAFT"
+)
+
+//SpectatorType is the type for a code request spectator type
+type SpectatorType string
+
+//Possible values for SpectatorType
+const (
+	None      SpectatorType = "NONE"
+	LobbyOnly SpectatorType = "LOBBYONLY"
+	All       SpectatorType = "ALL"
+)
 
 //CodeRequestOption is a function that allows you to change the default code request parameters
 type CodeRequestOption func(*CodeRequest)
@@ -84,4 +130,10 @@ func (c *CodeRequest) CodeRequestCount(n int32) func(*CodeRequest) {
 	return func(c *CodeRequest) {
 		c.Count = n
 	}
+}
+
+//ProviderRegistration is the post body when creating a tournament provider
+type ProviderRegistration struct {
+	URL    string `json:"url"`
+	Region Region `json:"region"`
 }

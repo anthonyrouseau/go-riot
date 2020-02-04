@@ -2,6 +2,8 @@ package client
 
 import "errors"
 
+import "fmt"
+
 var (
 	errUnimplemented        = errors.New("Unimplemented Method")
 	errBadRequest           = errors.New("Bad Request")
@@ -29,3 +31,17 @@ var (
 		504: errGatewayTimeout,
 	}
 )
+
+//riotError is the response body riot returns with an error
+type riotError struct {
+	Status *riotErrorStatus `json:"status"`
+}
+
+type riotErrorStatus struct {
+	Code    int32  `json:"status_code"`
+	Message string `json:"message"`
+}
+
+func (r *riotError) Format() error {
+	return fmt.Errorf("Error %d: %s", r.Status.Code, r.Status.Message)
+}
