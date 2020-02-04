@@ -20,7 +20,7 @@ func TestRateLimiting(t *testing.T) {
 		expectedPrimary := rate.NewLimiter(20, 20)
 		expectedSecondary := rate.NewLimiter(5/6, 100)
 		c := &client{
-			variant:  devClient,
+			variant:  DevClient,
 			apiKey:   testAPIKey,
 			client:   &http.Client{},
 			region:   "na1",

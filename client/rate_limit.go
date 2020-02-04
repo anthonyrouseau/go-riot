@@ -25,15 +25,15 @@ func (c *client) rateLimit(ctx context.Context, key routeKey) error {
 //newLimiters creates and sets the client's limiters for the given routeKey
 func newLimiters(c *client, key routeKey) []*rate.Limiter {
 	switch c.Variant() {
-	case devClient:
+	case DevClient:
 		lim1 := rate.NewLimiter(20, 20)
 		lim2 := rate.NewLimiter(5/6, 100)
 		c.limiters[key] = []*rate.Limiter{lim1, lim2}
-	case personalClient:
+	case PersonalClient:
 		lim1 := rate.NewLimiter(20, 20)
 		lim2 := rate.NewLimiter(5/6, 100)
 		c.limiters[key] = []*rate.Limiter{lim1, lim2}
-	case productionClient:
+	case ProductionClient:
 		lim1 := rate.NewLimiter(300, 3000)
 		lim2 := rate.NewLimiter(300, 180000)
 		c.limiters[key] = []*rate.Limiter{lim1, lim2}

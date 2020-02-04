@@ -16,7 +16,7 @@ func TestTFTMethods(t *testing.T) {
 		testAccountID     = "182BwdvZQMIpZwCk4vGZiHs71qSK18Bo9Ll6zBU2LQ"
 	)
 	ctx := context.Background()
-	client, err := NewClient(testAPIKey, SetVariant(devClient))
+	client, err := NewClient(testAPIKey, SetVariant(DevClient))
 	if err != nil {
 		t.Error(err)
 	}

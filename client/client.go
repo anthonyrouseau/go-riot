@@ -22,11 +22,12 @@ import (
 //variant is the type of client e.g. dev, production, etc. used for rate limiting
 type variant int
 
+//Values for client variant type
 const (
-	unspecifiedClient variant = iota
-	devClient
-	personalClient
-	productionClient
+	UnspecifiedClient variant = iota
+	DevClient
+	PersonalClient
+	ProductionClient
 )
 
 //Client is an interface with methods corresponding to the Riot api routes
@@ -125,7 +126,7 @@ func (c *client) Region() string {
 func NewClient(key string, options ...Option) (Client, error) {
 	c := &http.Client{}
 	newClient := &client{
-		variant:  unspecifiedClient,
+		variant:  UnspecifiedClient,
 		apiKey:   key,
 		client:   c,
 		region:   "na1",

@@ -10,7 +10,7 @@ func TestGeneralMethods(t *testing.T) {
 		testSummonerID = "c0n56ouT0eGJLaVy8Sbfe628zfBkRbaKZZwByHVDQik"
 	)
 	ctx := context.Background()
-	client, err := NewClient(testAPIKey, SetVariant(devClient))
+	client, err := NewClient(testAPIKey, SetVariant(DevClient))
 	if err != nil {
 		t.Error(err)
 	}

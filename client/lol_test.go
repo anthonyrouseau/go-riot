@@ -22,7 +22,7 @@ func TestLOLMethods(t *testing.T) {
 		testChampionID    = 202
 	)
 	ctx := context.Background()
-	client, err := NewClient(testAPIKey, SetVariant(devClient))
+	client, err := NewClient(testAPIKey, SetVariant(DevClient))
 	if err != nil {
 		t.Error(err)
 	}

@@ -9,8 +9,8 @@ func TestNewClient(t *testing.T) {
 		t.Error(err)
 	}
 	t.Run("Variant", func(t *testing.T) {
-		if v := c.Variant(); v != unspecifiedClient {
-			t.Errorf("Expected client variant %d, got %d", unspecifiedClient, v)
+		if v := c.Variant(); v != UnspecifiedClient {
+			t.Errorf("Expected client variant %d, got %d", UnspecifiedClient, v)
 		}
 	})
 	t.Run("API Key", func(t *testing.T) {
