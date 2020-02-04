@@ -81,3 +81,18 @@ type MiniSeries struct {
 	Target   int32  `json:"target"`
 	Wins     int32  `json:"wins"`
 }
+
+//LeagueQueryParams are the optional query parameters
+type LeagueQueryParams struct {
+	Page int32
+}
+
+//LeagueQueryOption is a function that changes the default value of a LeagueQueryParam
+type LeagueQueryOption func(*LeagueQueryParams)
+
+//PageOption is a LeagueQueryOption that updates the page parameter
+func PageOption(n int32) LeagueQueryOption {
+	return func(l *LeagueQueryParams) {
+		l.Page = n
+	}
+}

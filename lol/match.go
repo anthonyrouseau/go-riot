@@ -2,6 +2,12 @@ package lol
 
 import "time"
 
+import "net/url"
+
+import "strings"
+
+import "strconv"
+
 //MatchID is the id for a game
 type MatchID int64
 
@@ -100,4 +106,68 @@ type MatchEvent struct {
 type MatchPosition struct {
 	Y int32 `json:"y"`
 	X int32 `json:"x"`
+}
+
+//MatchOption is a function that updates the query parameters for a matchlist query
+type MatchOption func(*url.Values)
+
+//SetChampion returns a MatchOption to set the Champion parameter
+func SetChampion(champs []int) MatchOption {
+	var stringChamps []string
+	for _, v := range champs {
+		stringChamps = append(stringChamps, strconv.Itoa(v))
+	}
+	return func(v *url.Values) {
+		v.Set("champion", strings.Join(stringChamps, ","))
+	}
+}
+
+//SetQueue returns a MatchOption to set the Queue parameter
+func SetQueue(queue []int) MatchOption {
+	var queueString []string
+	for _, v := range queue {
+		queueString = append(queueString, strconv.Itoa(v))
+	}
+	return func(v *url.Values) {
+		v.Set("queue", strings.Join(queueString, ","))
+	}
+}
+
+//SetSeason returns a MatchOption to set the Season parameter
+func SetSeason(season []int) MatchOption {
+	var seasonString []string
+	for _, v := range season {
+		seasonString = append(seasonString, strconv.Itoa(v))
+	}
+	return func(v *url.Values) {
+		v.Set("season", strings.Join(seasonString, ","))
+	}
+}
+
+//SetEndTime returns a MatchOption to set the EndTime parameter
+func SetEndTime(end int64) MatchOption {
+	return func(v *url.Values) {
+		v.Set("endTime", strconv.FormatInt(end, 10))
+	}
+}
+
+//SetBeginTime returns a MatchOption to set the BeginTime parameter
+func SetBeginTime(begin int64) MatchOption {
+	return func(v *url.Values) {
+		v.Set("beginTime", strconv.FormatInt(begin, 10))
+	}
+}
+
+//SetEndIndex returns a MatchOption to set the EndIndex parameter
+func SetEndIndex(end int64) MatchOption {
+	return func(v *url.Values) {
+		v.Set("endIndex", strconv.FormatInt(end, 10))
+	}
+}
+
+//SetBeginIndex returns a MatchOption to set the BeginIndex parameter
+func SetBeginIndex(begin int64) MatchOption {
+	return func(v *url.Values) {
+		v.Set("beginIndex", strconv.FormatInt(begin, 10))
+	}
 }

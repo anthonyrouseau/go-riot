@@ -37,8 +37,14 @@ func (c *client) TFTSummonerLeagueEntries(ctx context.Context, sumID summoner.ID
 	return *leagueEntry.(*[]*tft.LeagueEntry), nil
 }
 
-func (c *client) TFTAllLeagueEntries(ctx context.Context, tier tft.Tier, division tft.Division) ([]*tft.LeagueEntry, error) {
-	url := fmt.Sprintf("https://%s.%s/tft/league/v1/entries/%s/%s", c.region, c.host, tier, division)
+func (c *client) TFTAllLeagueEntries(ctx context.Context, tier tft.Tier, division tft.Division, options ...tft.LeagueQueryOption) ([]*tft.LeagueEntry, error) {
+	params := &tft.LeagueQueryParams{
+		Page: 1,
+	}
+	for _, opt := range options {
+		opt(params)
+	}
+	url := fmt.Sprintf("https://%s.%s/tft/league/v1/entries/%s/%s?page=%d", c.region, c.host, tier, division, params.Page)
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, err

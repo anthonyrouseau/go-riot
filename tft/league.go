@@ -76,3 +76,18 @@ type LeagueEntry struct {
 	SummonerID   string      `json:"summonerId"`
 	LeaguePoints int32       `json:"leaguePoints"`
 }
+
+//LeagueQueryParams are the optional query parameters
+type LeagueQueryParams struct {
+	Page int32
+}
+
+//LeagueQueryOption is a function that changes the default value of a LeagueQueryParam
+type LeagueQueryOption func(*LeagueQueryParams)
+
+//PageOption is a LeagueQueryOption that updates the page parameter
+func PageOption(n int32) LeagueQueryOption {
+	return func(l *LeagueQueryParams) {
+		l.Page = n
+	}
+}

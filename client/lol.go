@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/anthonyrouseau/go-riot/account"
 	"github.com/anthonyrouseau/go-riot/lol"
@@ -38,8 +39,14 @@ func (c *client) LOLSummonerLeagueEntries(ctx context.Context, sumID summoner.ID
 	return *leagueEntries.(*[]*lol.LeagueEntry), nil
 }
 
-func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, tier lol.Tier, division lol.Division) ([]*lol.LeagueEntry, error) {
-	url := fmt.Sprintf("https://%s.%s/lol/league/v4/entries/%s/%s/%s", c.region, c.host, queueName, tier, division)
+func (c *client) LOLAllLeagueEntries(ctx context.Context, queueName queue.Name, tier lol.Tier, division lol.Division, options ...lol.LeagueQueryOption) ([]*lol.LeagueEntry, error) {
+	params := &lol.LeagueQueryParams{
+		Page: 1,
+	}
+	for _, opt := range options {
+		opt(params)
+	}
+	url := fmt.Sprintf("https://%s.%s/lol/league/v4/entries/%s/%s/%s?page=%d", c.region, c.host, queueName, tier, division, params.Page)
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, err
@@ -104,8 +111,12 @@ func (c *client) LOLMatch(ctx context.Context, matchID lol.MatchID) (*lol.Match,
 	return match.(*lol.Match), nil
 }
 
-func (c *client) LOLAccountMatches(ctx context.Context, accountID account.ID) (*lol.MatchList, error) {
-	url := fmt.Sprintf("https://%s.%s/lol/match/v4/matchlists/by-account/%s", c.region, c.host, accountID)
+func (c *client) LOLAccountMatches(ctx context.Context, accountID account.ID, options ...lol.MatchOption) (*lol.MatchList, error) {
+	params := &url.Values{}
+	for _, opt := range options {
+		opt(params)
+	}
+	url := fmt.Sprintf("https://%s.%s/lol/match/v4/matchlists/by-account/%s?%s", c.region, c.host, accountID, params.Encode())
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return nil, err
